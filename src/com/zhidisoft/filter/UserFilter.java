@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter("/manage/*")
-public class ManageFilter implements Filter {
+public class UserFilter implements Filter {
 
 	@Override
 	public void destroy() {
@@ -30,8 +30,8 @@ public class ManageFilter implements Filter {
 
 		// 通过session获取用户权限
 		HttpSession session = httpReq.getSession();
-		Object manage = session.getAttribute("manage");// manage权限
-		if (manage != null) {
+		Object user = session.getAttribute("user");
+		if (user != null) {
 			chain.doFilter(request, response);
 		} else {
 //			httpResp.sendRedirect(httpReq.getContextPath() + "/login.jsp");

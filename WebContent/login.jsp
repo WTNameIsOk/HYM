@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		var username=$("#username").val();
 		var password=$("#password").val();
 		var captcha=$("#captcha").val();
-		var remUser=$("#rem").val();
+		var remUser=$("#rem")[0].checked;
 		if(!username||username.length<6){
 			$("#error").show()
 			$("#info").text("用户名输入错误").css("color","red");
@@ -105,9 +105,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		//验证码验证
-		var validateCode = function(){
-	  		$.get("login.do",{"code":captcha},function(result){
-				if (!result) {
+		var validateCode = $.get("login.do",{"code":captcha},function(result){
+				if (!result.success) {
 					$("#error").show();
 					$("#info").text("验证码错误").css("color","red");
 					pushCode();
@@ -115,11 +114,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}else{
 					$("#error").hide();
 				}
-			})
-		}
+			},"json")
+			
 		//验证码通过之后进行登录
-		$.when(validateCode()).done(function(result){
-			if (result) {
+		$.when(validateCode).done(function(result){
+			if (result.success) {
 				$.post(
 					"login.do",
 					{
@@ -128,9 +127,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						"rem":remUser
 					},
 					function(data){
-						if (data)
+						if (data) {
 							debugger;
-							//location.href="manage/index.html";
+							
+						} else {
+							location.href="manage/index.jsp";
+						}
 				},"")
 			}
 		})
