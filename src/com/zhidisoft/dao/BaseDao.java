@@ -1,4 +1,4 @@
-package com.zhidisoft.base;
+package com.zhidisoft.dao;
 
 import java.util.List;
 

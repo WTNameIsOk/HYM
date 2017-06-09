@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter("/static/*")
-public class AuthFilter implements Filter {
+@WebFilter("/manage/*")
+public class ManageFilter implements Filter {
 
 	@Override
 	public void destroy() {
@@ -31,11 +31,10 @@ public class AuthFilter implements Filter {
 		// 通过session获取用户权限
 		HttpSession session = httpReq.getSession();
 		Object manage = session.getAttribute("manage");// manage权限
-		// Object system = session.getAttribute("system");//system权限
 		if (manage != null) {
 			chain.doFilter(request, response);
 		} else {
-			httpResp.sendRedirect(httpReq.getContextPath() + "/login.html");
+			httpResp.sendRedirect(httpReq.getContextPath() + "/login.jsp");
 		}
 
 	}

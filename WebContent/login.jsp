@@ -105,8 +105,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		//验证码验证
-		
+		$.get("login.do",{"code":captcha},function(result){
+			if (result) {
+				$("#info").text("验证码错误").css("color","red");
+				return;
+			}
+		},"html")
 		//验证码通过之后进行登录
+		$.post("login.do",{"username":username,"password":password,"rem":remUser},function(){
+			
+		})
   	}
   
   	$(function(){
