@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<i class="iconfont">&#xe633;</i>
 									<input type="text" name="captcha" id="captcha" placeholder="验证码">
 								</div>
-								<span class="check-code"><img id="captchaimg" src="kaptcha.do"></span>
+								<span class="check-code"><img id="captchaimg" src="kaptcha.do" style="vertical-align: middle;width: 114;height: 42px;cursor: pointer;"></span>
 							</div>
 							<div class="tips clearfix">
 								<label><input type="checkbox" id="rem" name="remUser" checked="checked">记住用户名</label>
@@ -105,26 +105,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		//验证码验证
-		$.get("login.do",{"code":captcha},function(result){
-			if (result) {
-				$("#info").text("验证码错误").css("color","red");
-				return;
-			}
-		},"html")
+		var validateCode = function(){
+	  		$.get("login.do",{"code":captcha},function(result){
+	  			alert(!result)
+				if (!result) {
+					$("#error").show();
+					$("#info").text("验证码错误").css("color","red");
+					pushCode();
+					return;
+				}else{
+					$("#error").hide();
+				}
+			})
+		}
+		validateCode();
 		//验证码通过之后进行登录
-		$.post("login.do",{"username":username,"password":password,"rem":remUser},function(){
-			
+		$.when(validateCode).done(function(result){
+			if (result) {
+				$.post(
+						"login.do",
+						{
+							"username":username,
+							"password":password,
+							"rem":remUser
+						},
+						function(){
+								//location.href="manage/index.html";
+				},"")
+			}
 		})
   	}
-  
+  	
+  	//刷新验证码
+ 	var pushCode = function(){
+ 		$("#captchaimg").attr("src","kaptcha.do?num="+Math.random());
+ 	}
+  	
   	$(function(){
   		var username = document.cookie.split("=")[1]
   		//放入cookie值
   		$("#username").val(username)
   		$("#error").hide()
   		$("#captchaimg").on("click",function(){
-  			var num = Math.random()
-  			this.src="kaptcha.do?num="+Math.random()
+  			pushCode();
   		})  		
   		$(".supplier").on("click",function(){
   			login();
