@@ -121,8 +121,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <i class="iconfont">&#xe642;</i>
                         </a>
                          <ul class="sider-nav-s">
-                             <li class="active"><a href="#">个人基本信息</a></li>
-                             <li><a href="#">密码修改</a></li>
+                             <li class="active"><a href="javascript:">个人基本信息</a></li>
+                             <li><a href="javascript:">密码修改</a></li>
                              <li ><a href="javascript:void(0);" class="exit">退出系统</a></li>
                          </ul>
                      </li>
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="pf-page">
                 <div class="easyui-tabs1" style="width:100%;height:100%;">
                   <div title="首页" style="padding:10px 5px 5px 10px;">
-                    <iframe class="page-iframe" src="manage/home.html" frameborder="no"   border="no" height="100%" width="100%" scrolling="auto"></iframe>
+                    <iframe class="page-iframe" src="manage/home.jsp" frameborder="no"   border="no" height="100%" width="100%" scrolling="auto"></iframe>
                   </div>
                 </div>
             </div>
@@ -171,9 +171,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $(".exit").on("click",function(e){
                 $.messager.confirm("警告","确定退出税源信息管理系统？",function(data){
                     if(data){
-                        //发送退出系统请求
+                        //发送退出系统请求(清除session)
+                        
                         //退出成功重定向到登录页面
-                        window.location.href="login.html"
+                        window.location.href="login.jsp"
                     }
                 });
             });

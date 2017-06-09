@@ -34,7 +34,7 @@ public class UserFilter implements Filter {
 		if (user != null) {
 			chain.doFilter(request, response);
 		} else {
-//			httpResp.sendRedirect(httpReq.getContextPath() + "/login.jsp");
+			httpResp.sendRedirect(httpReq.getContextPath() + "/login.jsp");
 		}
 
 	}
