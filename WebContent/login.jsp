@@ -107,7 +107,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//验证码验证
 		var validateCode = function(){
 	  		$.get("login.do",{"code":captcha},function(result){
-	  			alert(!result)
 				if (!result) {
 					$("#error").show();
 					$("#info").text("验证码错误").css("color","red");
@@ -118,19 +117,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			})
 		}
-		validateCode();
 		//验证码通过之后进行登录
-		$.when(validateCode).done(function(result){
+		$.when(validateCode()).done(function(result){
 			if (result) {
 				$.post(
-						"login.do",
-						{
-							"username":username,
-							"password":password,
-							"rem":remUser
-						},
-						function(){
-								//location.href="manage/index.html";
+					"login.do",
+					{
+						"username":username,
+						"password":password,
+						"rem":remUser
+					},
+					function(data){
+						if (data)
+							debugger;
+							//location.href="manage/index.html";
 				},"")
 			}
 		})
