@@ -1,7 +1,5 @@
 package com.zhidisoft.entity;
 
-import java.util.Date;
-
 /**
  * 纳税人信息表
  * @author 贺天辰
@@ -32,7 +30,7 @@ public class TaxPayer {
 	private String taxerMobile; 		// 18 办税人员手机号码 Varchar(12)
 	private String taxerIdCardImageURL; // 19 办税人员身份证扫描图片 Varchar(64)
 	private String bizAddressPhone; 	// 20 生产经营地电话 Varchar(12)
-	private Date recordDate; 			// 21 录入日期 Date
+	private String recordDate; 			// 21 录入日期 Date
 	private Integer userId; 			// 22 录入人员 int
 	
 	public Integer getId() {
@@ -161,10 +159,10 @@ public class TaxPayer {
 	public void setBizAddressPhone(String bizAddressPhone) {
 		this.bizAddressPhone = bizAddressPhone;
 	}
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 	public Integer getUserId() {

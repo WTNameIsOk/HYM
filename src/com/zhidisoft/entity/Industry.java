@@ -1,7 +1,5 @@
 package com.zhidisoft.entity;
 
-import java.util.Date;
-
 /**
  * 行业代码表
  * @author 贺天辰
@@ -11,7 +9,7 @@ public class Industry {
 
 	private Integer id;				//  1 行业编号 id Int	主键
 	private String industryName;	//	2 行业名称  Varchar(64)
-	private Date recordDate;		//	3 录入日期  Date
+	private String recordDate;		//	3 录入日期  Date
 	private Integer recordUserId;	//	4 录入人员  int
 	
 	public Integer getId() {
@@ -26,10 +24,10 @@ public class Industry {
 	public void setIndustryName(String industryName) {
 		this.industryName = industryName;
 	}
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 	public Integer getRecordUserId() {

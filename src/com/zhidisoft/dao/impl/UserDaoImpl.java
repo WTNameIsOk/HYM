@@ -16,9 +16,10 @@ public class UserDaoImpl implements BaseDao<User> {
 		Object[] args = {username,password};
 		
 		List<Map<String, String>> mapList = DBUtil.query(sql, args);
+		if (!mapList.isEmpty()) {
 			user = new User();
 			BeanUtil.mapToBean(user, mapList.get(0));
-		
+		}
 		return user;
 	}
 	
@@ -42,7 +43,9 @@ public class UserDaoImpl implements BaseDao<User> {
 
 	@Override
 	public boolean update(User t) {
-		// TODO Auto-generated method stub
+		String sql = "UPDATE tb_user SET PASSWORD = '' WHERE id = 1";
+		
+		
 		return false;
 	}
 

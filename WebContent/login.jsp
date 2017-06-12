@@ -96,6 +96,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#info").text("")
 		}
 
+		if(!password){
+			$("#error").show()
+			$("#info").text("请输入密码").css("color","red");
+			return;
+		}else{
+			$("#info").text("")
+		}
+		
 		if(!captcha||captcha.length!=4){
 			$("#error").show()
 			$("#info").text("验证码为4位").css("color","red");
@@ -106,19 +114,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		//验证码验证
 		var validateCode = $.get("login.do",{"code":captcha},function(result){
-				if (!result.success) {
+				if (!result) {
 					$("#error").show();
 					$("#info").text("验证码错误").css("color","red");
 					pushCode();
 					return;
 				}else{
-					$("#error").hide();
+					$("#info").text("")
 				}
-			},"json")
+			})
 			
 		//验证码通过之后进行登录
 		$.when(validateCode).done(function(result){
-			if (result.success) {
+			if (result) {
 				$.post(
 					"login.do",
 					{
@@ -128,12 +136,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					},
 					function(data){
 						if (data) {
-							debugger;
-							
+							$("#error").show()
+							$("#info").text("登录失败\n用户名或密码错误！").css("color","red");
+							return;
 						} else {
 							location.href="manage/index.jsp";
 						}
-				},"")
+				})
 			}
 		})
   	}

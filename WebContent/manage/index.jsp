@@ -28,27 +28,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <img src="static/images/main/user.png" alt="">
                 </div>
                 <!--用户名-->
-                <h4 class="pf-user-name ellipsis">张春名</h4>
+                <h4 class="pf-user-name ellipsis">${user.username }</h4>
                 <i class="iconfont xiala">&#xe607;</i>
                 <!-- 头部用户信息 下拉菜单 -->
                 <div class="pf-user-panel">
                     <ul class="pf-user-opt">
-                        <li>
+                        <li class="user_msg">
                             <a href="javascript:void(0);">
                                 <i class="iconfont">&#xe60d;</i>
                                 <span class="pf-opt-name">用户信息</span>
                             </a>
                         </li>
-                        <li class="pf-modify-pwd">
+                        <li class="pf-modify-pwd mdf_pwd">
                             <a href="javascript:void(0)">
                                 <i class="iconfont">&#xe634;</i>
                                 <span class="pf-opt-name">修改密码</span>
                             </a>
                         </li>
-                        <li class="pf-logout">
+                        <li class="pf-logout exit">
                             <a href="javascript:void(0);">
                                 <i class="iconfont">&#xe60e;</i>
-                                <span class="pf-opt-name exit" class="exit">退出</span>
+                                <span class="pf-opt-name">退出</span>
                             </a>
                         </li>
                     </ul>
@@ -115,14 +115,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </ul>
                      </li>
                      <li>
+                        <a href="javascript:addTab('办税专员管理','manage/');">
+                            <span class="iconfont sider-nav-icon">&#xe620;</span>
+                            <span class="sider-nav-title">办税专员管理</span>
+                            <i class="iconfont">&#xe642;</i>
+                        </a>
+                     </li>
+                     <li>
                         <a href="javascript:;">
                             <span class="iconfont sider-nav-icon">&#xe611;</span>
                             <span class="sider-nav-title">个人信息</span>
                             <i class="iconfont">&#xe642;</i>
                         </a>
                          <ul class="sider-nav-s">
-                             <li class="active"><a href="javascript:">个人基本信息</a></li>
-                             <li><a href="javascript:">密码修改</a></li>
+                             <li class="active user_msg"><a href="javascript:">个人基本信息</a></li>
+                             <li><a href="javascript:" class="mdf_pwd">密码修改</a></li>
                              <li ><a href="javascript:void(0);" class="exit">退出系统</a></li>
                          </ul>
                      </li>
@@ -172,12 +179,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $.messager.confirm("警告","确定退出税源信息管理系统？",function(data){
                     if(data){
                         //发送退出系统请求(清除session)
-                        
+                        $.get("logout.do");
                         //退出成功重定向到登录页面
                         window.location.href="login.jsp"
                     }
                 });
             });
+            $("#user_msg").window('close');
+            $(".user_msg").click(function(){
+            	$("#user_msg").window('open');
+            })
+            //密码修改页面
+            $("#mdf_pwd").window('close');
+            $(".mdf_pwd").click(function(){
+            	$("#mdf_pwd").window('open');
+            })
         });
 
     $('.easyui-tabs1').tabs({
@@ -249,5 +265,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //    $('.panel-body').height($("#pf-page").height()-76)
     // }, 200)
     </script>
+    <div id="mdf_pwd" class="easyui-window" title="密码修改" style="width:600px;height:400px" data-options="iconCls:'icon-save',modal:true">
+		<iframe scrolling="no" src="manage/modifyPassword.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
+	</div>
+	<div id="user_msg" class="easyui-window" title="基本信息" style="width:800px;height:300px" data-options="iconCls:'icon-save',modal:true">
+    	<iframe scrolling="no" src="manage/userMsg.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
+	</div>
 </body> 
 </html>

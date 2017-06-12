@@ -1,7 +1,5 @@
 package com.zhidisoft.entity;
 
-import java.util.Date;
-
 /**
  * 税源基础信息表
  * @author 贺天辰
@@ -15,12 +13,12 @@ public class TaxSource {
 	private Integer taxOrganId;		// 4 下达部门 int 关联 tb_tax_organ
 	private Integer approverId;		// 5 批准人 int 关联 tb_taxer
 	private Integer executeId;		// 6 执行人员 int 关联 tb_taxer 的
-	private Date executeTime; 		// 7 执行时间 Date
+	private String executeTime; 		// 7 执行时间 Date
 	private String taskFrom; 		// 8 任务来源 Varchar(12)
 	private String taskState; 		// 9 任务执行情况 Varchar(128)
 	private String idea; 			// 10 调查结论或意见 Varchar(512)
 	private Integer riskLevel; 		// 11 风险等级 int 0 无 1 低 2 中 3 高 默认为 0
-	private Date recordDate; 		// 12 录入日期 Date
+	private String recordDate; 		// 12 录入日期 Date
 	private Integer recordUserId;	// 13 录入人员 int
 
 	public Integer getId() {
@@ -71,11 +69,11 @@ public class TaxSource {
 		this.executeId = executeId;
 	}
 
-	public Date getExecuteTime() {
+	public String getExecuteTime() {
 		return executeTime;
 	}
 
-	public void setExecuteTime(Date executeTime) {
+	public void setExecuteTime(String executeTime) {
 		this.executeTime = executeTime;
 	}
 
@@ -111,11 +109,11 @@ public class TaxSource {
 		this.riskLevel = riskLevel;
 	}
 
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
 
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 

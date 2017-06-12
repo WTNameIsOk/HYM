@@ -11,12 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.zhidisoft.base.ResponseResult;
 import com.zhidisoft.dao.impl.UserDaoImpl;
 import com.zhidisoft.entity.User;
 import com.zhidisoft.util.EncryptUtil;
-
-import net.sf.json.JSONObject;
 
 @SuppressWarnings("serial")
 @WebServlet("/login.do")
@@ -28,14 +25,10 @@ public class LoginServlet extends HttpServlet {
 		String iptCode = req.getParameter("code");
 		String Code = (String) req.getSession().getAttribute("KAPTCHA_SESSION_KEY");
 
-		ResponseResult result = new ResponseResult();
-		if (Code.equalsIgnoreCase(iptCode)) {
-			result.setSuccess(true);
-		}
-		JSONObject object = JSONObject.fromObject(result);
-		
 		PrintWriter writer = resp.getWriter();
-		writer.print(object);
+		if (Code.equalsIgnoreCase(iptCode)) {
+			writer.print(true);
+		}
 		writer.flush();
 		writer.close();
 	}
@@ -46,8 +39,6 @@ public class LoginServlet extends HttpServlet {
 		String password = EncryptUtil.encryptMD5(req.getParameter("password"));
 		Boolean rem = Boolean.parseBoolean(req.getParameter("rem"));
 
-		System.out.println(rem);
-		
 		// …Ë÷√cookie
 		if (rem) {
 			Cookie cookie = new Cookie("username", username);

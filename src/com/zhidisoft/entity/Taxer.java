@@ -1,7 +1,5 @@
 package com.zhidisoft.entity;
 
-import java.util.Date;
-
 /**
  * 税务人员信息表
  * @author 贺天辰
@@ -15,13 +13,13 @@ public class Taxer {
 	private String mobile;			// 3 税务人员电话 Varchar(12)
 	private String address;			// 4 税务人员地址 Varchar(128)
 	private String sex;				// 5 税务人员性别 Varchar(2)
-	private Date birthday;			// 6 出生日期 Date
+	private String birthday;			// 6 出生日期 Date
 	private String email;			// 7 电子邮件 Varchar(64)
 	private Integer organId;		// 8 所属税务机关 int 关联 tb_tax_organ
 	private Integer state;			// 9 有效标志 int 1: 有效 0: 无效 默认 0
 	private Integer mgr;			// 10 上级领导 int tb_taxer 中税务工作人员
 	private Integer admin;			// 11 系统管理员标志 Int 1 代表是 0 代表不是 默认为 0
-	private Date recordDate;		// 12 录入日期 Date
+	private String recordDate;		// 12 录入日期 Date
 	private Integer recordUserId;	// 13 录入人员 int
 
 	public Integer getId() {
@@ -72,11 +70,11 @@ public class Taxer {
 		this.sex = sex;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -120,11 +118,11 @@ public class Taxer {
 		this.admin = admin;
 	}
 
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
 
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 

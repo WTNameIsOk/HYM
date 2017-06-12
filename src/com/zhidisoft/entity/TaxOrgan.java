@@ -1,7 +1,5 @@
 package com.zhidisoft.entity;
 
-import java.util.Date;
-
 /**
  * 税务机关表
  * @author 贺天辰
@@ -19,7 +17,7 @@ public class TaxOrgan {
 	private Integer leaderId; 		// 8 负责人 int 关联 tb_taxer
 	private String taxTypeCode; 	// 9 国地税类型代码 Varchar(12) 国税 1000210 地税 1000215
 	private Integer state; 			// 10 有效标志 int 1: 有效 0: 无效 默认 0
-	private Date recordDate; 		// 11 录入日期 Date
+	private String recordDate; 		// 11 录入日期 Date
 	private Integer recordUserId; 	// 12 录入人员 int
 
 	public Integer getId() {
@@ -102,11 +100,11 @@ public class TaxOrgan {
 		this.state = state;
 	}
 
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
 
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 
