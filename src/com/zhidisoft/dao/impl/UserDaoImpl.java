@@ -8,7 +8,7 @@ import com.zhidisoft.entity.User;
 import com.zhidisoft.util.BeanUtil;
 import com.zhidisoft.util.DBUtil;
 
-public class UserDaoImpl implements BaseDao<User> {
+public class UserDaoImpl extends BaseDao<User> {
 
 	public User login(String username,String password) {
 		User user = null;
@@ -42,11 +42,10 @@ public class UserDaoImpl implements BaseDao<User> {
 	}
 
 	@Override
-	public boolean update(User t) {
-		String sql = "UPDATE tb_user SET PASSWORD = '' WHERE id = 1";
-		
-		
-		return false;
+	public boolean update(User user) {
+		String sql = "UPDATE tb_user SET PASSWORD = ? WHERE id = ?";
+		Object[] args = {user.getPassword(),user.getId()};
+		return DBUtil.update(sql, args);
 	}
 
 	@Override

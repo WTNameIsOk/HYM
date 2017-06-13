@@ -23,7 +23,6 @@ public class ModifyPasswordServlet extends HttpServlet{
 		String oldPassword = EncryptUtil.encryptMD5(req.getParameter("oldPassword"));
 		String newPassword = EncryptUtil.encryptMD5(req.getParameter("newPassword"));
 		
-		
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
 		

@@ -33,13 +33,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!-- 头部用户信息 下拉菜单 -->
                 <div class="pf-user-panel">
                     <ul class="pf-user-opt">
-                        <li class="user_msg">
+                        <li class="userMsg">
                             <a href="javascript:void(0);">
                                 <i class="iconfont">&#xe60d;</i>
                                 <span class="pf-opt-name">用户信息</span>
                             </a>
                         </li>
-                        <li class="pf-modify-pwd mdf_pwd">
+                        <li class="pf-modify-pwd mdfPwd">
                             <a href="javascript:void(0)">
                                 <i class="iconfont">&#xe634;</i>
                                 <span class="pf-opt-name">修改密码</span>
@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </ul>
                      </li>
                      <li>
-                        <a href="javascript:addTab('办税专员管理','manage/');">
+                        <a href="javascript:addTab('办税专员管理','manage/listTaxer.jsp');">
                             <span class="iconfont sider-nav-icon">&#xe620;</span>
                             <span class="sider-nav-title">办税专员管理</span>
                             <i class="iconfont">&#xe642;</i>
@@ -128,8 +128,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <i class="iconfont">&#xe642;</i>
                         </a>
                          <ul class="sider-nav-s">
-                             <li class="active user_msg"><a href="javascript:">个人基本信息</a></li>
-                             <li><a href="javascript:" class="mdf_pwd">密码修改</a></li>
+                             <li class="active userMsg"><a href="javascript:">个人基本信息</a></li>
+                             <li><a href="javascript:" class="mdfPwd">密码修改</a></li>
                              <li ><a href="javascript:void(0);" class="exit">退出系统</a></li>
                          </ul>
                      </li>
@@ -185,14 +185,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                 });
             });
-            $("#user_msg").window('close');
-            $(".user_msg").click(function(){
-            	$("#user_msg").window('open');
+            //个人基本信息页面
+            $("#userMsg").window('close');
+            $(".userMsg").click(function(){
+            	$("#userMsg").window('open');
             })
             //密码修改页面
-            $("#mdf_pwd").window('close');
-            $(".mdf_pwd").click(function(){
-            	$("#mdf_pwd").window('open');
+            $("#mdfPwd").window('close');
+            $(".mdfPwd").click(function(){
+            	$("#mdfPwd").window('open');
             })
         });
 
@@ -265,10 +266,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //    $('.panel-body').height($("#pf-page").height()-76)
     // }, 200)
     </script>
-    <div id="mdf_pwd" class="easyui-window" title="密码修改" style="width:600px;height:400px" data-options="iconCls:'icon-save',modal:true">
+    <div id="mdfPwd" class="easyui-window" title="密码修改" style="width:600px;height:400px" data-options="iconCls:'icon-save',modal:true">
 		<iframe scrolling="no" src="manage/modifyPassword.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
 	</div>
-	<div id="user_msg" class="easyui-window" title="基本信息" style="width:800px;height:300px" data-options="iconCls:'icon-save',modal:true">
+	<div id="userMsg" class="easyui-window" title="基本信息" style="width:800px;height:300px" data-options="iconCls:'icon-save',modal:true">
     	<iframe scrolling="no" src="manage/userMsg.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
 	</div>
 </body> 

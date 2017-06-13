@@ -58,13 +58,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script type="text/javascript" src="static/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
   <script type="text/javascript" src="static/js/calendar.js"></script>
     <script type="text/javascript">
     $(function(){
     	$('#error').hide();
     	//定义重置按钮
-    	$('a:contains(重置)').click(function(){
+    	var reset = function(){
     		$("input").val('');
+    	}
+    	$('a:contains(重置)').click(function(){
+    		reset();
+	    	$('#error').hide();
     	})
     	//表单验证
     	//提交ajax请求
@@ -87,13 +92,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		} else {
     	    	$('#error').hide();
     		}
-    		
-    		$.get("modifyPassword",{"oldPassword":oldPassword,"newPassword":newPassword},function(result){
-    			if (result){
-        	    	$('#error').show();
-        			$('#info').text('密码错误').css("color","red");
-    			}
-    		})
+    		$.messager.confirm('提示','确认修改？',function(r){
+    		    if (r){
+    		    	$.get("modifyPassword",{"oldPassword":oldPassword,"newPassword":newPassword},function(result){
+	        			if (result){
+	            	    	$('#error').show();
+	            			$('#info').text('密码错误').css("color","red");
+	        			} else {
+	        	    		reset();
+	        				parent.$("#mdf_pwd").window('close');
+	        			}
+	        		})
+    		    }
+    		});
     	})
     })
     </script>

@@ -5,7 +5,7 @@ import java.util.List;
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxOrgan;
 
-public class TaxOrganDaoImpl implements BaseDao<TaxOrgan> {
+public class TaxOrganDaoImpl extends BaseDao<TaxOrgan> {
 
 	@Override
 	public List<TaxOrgan> getAll() {

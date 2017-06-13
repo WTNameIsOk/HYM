@@ -5,7 +5,7 @@ import java.util.List;
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.Industry;
 
-public class IndustryDaoImpl implements BaseDao<Industry> {
+public class IndustryDaoImpl extends BaseDao<Industry> {
 
 	@Override
 	public List<Industry> getAll() {
