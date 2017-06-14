@@ -156,19 +156,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		var username = document.cookie.split("=")[1]
   		//放入cookie值
   		$("#username").val(username)
+  		//初始化提示窗口
   		$("#error").hide()
+  		//刷新验证码
   		$("#captchaimg").on("click",function(){
   			pushCode();
   		})  		
+  		//登录按钮
   		$(".supplier").on("click",function(){
   			login();
   		})
-  		
+  		//重置按钮
+  		$(".purchaser").on("click",function(){
+  			$('input').val('');
+  		})
+  		//定义回车键
   		$("form").keydown(function() {
             if (event.keyCode == "13") {//keyCode=13是回车键
          		login();
             }
-       });
+       	});
   	})
   </script>
 </html>

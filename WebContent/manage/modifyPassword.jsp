@@ -71,9 +71,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		reset();
 	    	$('#error').hide();
     	})
+    	//定义回车键执行
+  		$("input").keydown(function() {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+            	execute();
+            }
+       	});
     	//表单验证
+    	$('input').focus(function(){
+	    	$('#error').hide();
+    	})
     	//提交ajax请求
-    	$('a:contains(保存)').click(function(){
+    	var execute = function(){
     		var oldPassword = $('#oldPassword').val();
     		var newPassword = $('#newPassword').val();
     		var rePassword = $('#validatePassword').val();
@@ -100,11 +109,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            			$('#info').text('密码错误').css("color","red");
 	        			} else {
 	        	    		reset();
-	        				parent.$("#mdf_pwd").window('close');
+	        				parent.$("#mdfPwd").window('close');
 	        			}
 	        		})
     		    }
     		});
+    	}
+    	
+    	$('a:contains(保存)').click(function(){
+    		execute();
     	})
     })
     </script>

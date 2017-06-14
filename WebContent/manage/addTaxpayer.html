@@ -107,19 +107,19 @@
 	$(function(){
 	/**
 		ajax请求获取外键值
-		$.post("getIndustry.do",{},function(data){
+		$.get("getIndustry.do",{},function(data){
 			var industry = $("#selectIndustry")
 			$.each(data,function(index, val){
 				industry.append("<option value='"+val.industryId+"'>"+val.industryName+"</option>")
 			})
 		},"json")
-		$.post("getOrganServlet.do",{},function(data){
+	**/
+		$.get("getOrganServlet.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
 				organ.append("<option value='"+val.organId+"'>"+val.organName+"</option>")
 			})
 		},"json")
-	**/
 	
 	
 	

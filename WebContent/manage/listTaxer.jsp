@@ -72,7 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 width : 750,
                 height : 600,
                 title : "修改税务人员信息",
-                url : "manage/addTaxer.html"
+                url : "editTaxer?id="+id,
+                
             })
     	}
     	//删除操作
@@ -100,7 +101,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$('#taxerName').textbox('setValue','');
 				//$('.textbox-text').val('');无效
 	        	$('#dg').datagrid('load', {
-	        		
 	        	});
 			})
         //为添加税务专员添加事件处理函数
@@ -110,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                  width : 750,
 	                  height : 600,
 	                  title : "新增税务人员",
-	                  url : "manage/addTaxer.html"
+	                  url : "manage/addTaxer.jsp"
 	              });
 	           });
        });
@@ -123,6 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             options.height = !options.height ? 400 : options.height;
             options.url = !options.url ? "404.html" : options.url;
             options.title = !options.title ? "" : options.title;
+            options.operation = !options.operation ? "" : options.operation;
 
             parent.$("#topWindow").window({
                 title : options.title,

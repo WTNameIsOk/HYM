@@ -1,36 +1,57 @@
 package com.zhidisoft.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.Taxer;
+import com.zhidisoft.util.BeanUtil;
 import com.zhidisoft.util.DBUtil;
 
 public class TaxerDaoImpl extends BaseDao<Taxer> {
 
 	@Override
 	public List<Taxer> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from tb_taxer";
+		List<Map<String, String>> mapList = DBUtil.query(sql);
+		List<Taxer> list = null;
+		if (mapList != null && !mapList.isEmpty()) {
+			list = new ArrayList<Taxer>();
+			for (Map<String, String> map : mapList) {
+				Taxer taxer = new Taxer();
+				BeanUtil.mapToBean(taxer, map);
+				list.add(taxer);
+			}
+		}
+		
+		return list;
 	}
 
 	@Override
 	public Taxer getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from tb_taxer where id = ?";
+		List<Map<String, String>> mapList = DBUtil.query(sql, id);
+		Taxer taxer = null;
+		if (mapList != null && !mapList.isEmpty()) {
+			taxer = new Taxer();
+			BeanUtil.mapToBean(taxer, mapList.get(0));
+		}
+		return taxer;
 	}
 
 	@Override
 	public boolean add(Taxer t) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "INSERT INTO tb_taxer (taxerCode, taxerName, mobile, address, sex, birthday, email, organId, state, mgr, admin, recordDate, recordUserId) VALUES ('12', '12', '12', '12', '12', '2017-05-01', '12', '1', '1', '1', '1', '2017-06-08', '1');";
+		Object[] args = {t.getTaxerCode(), t.getTaxerName(), t.getMobile(), t.getAddress(), t.getSex(), t.getBirthday(), t.getEmail(), t.getOrganId(), t.getState(), t.getMgr(), t.getAdmin(), t.getRecordDate(), t.getRecordUserId()};
+		return DBUtil.update(sql, args);
 	}
 
 	@Override
 	public boolean update(Taxer t) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "UPDATE tb_taxer SET mobile=?,address=?,sex=?, birthday = ? , email = ? , organId = ? , state = ? , mgr = ? , admin = ? WHERE id = ?";
+		Object[] args = {t.getMobile(),t.getAddress(),t.getSex(), t.getBirthday() , t.getEmail() , t.getOrganId() , t.getState() , t.getMgr(), t.getAdmin(), t.getId()};
+		return DBUtil.update(sql, args);
 	}
 
 	@Override
