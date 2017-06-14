@@ -17,32 +17,36 @@ import com.zhidisoft.dao.impl.TaxerDaoImpl;
 import com.zhidisoft.entity.Taxer;
 
 /**
- * 更新数据servlet
- * @author 贺天辰
+ * taxer的增、删操作服务器
+ * 
+ * @author Administrator
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/editTaxer")
-public class EditTaxerServlet extends HttpServlet{
+@WebServlet("/taxer.do")
+public class TaxerServlet extends HttpServlet {
 
 	/**
-	 * 根据id查询数据，并返回
+	 * 删除操作
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//获取id参数
 		Integer id = Integer.parseInt(req.getParameter("id"));
-		//根据id获取查询数据
+
+		//把id传入执行数据库操作，并返回执行结果
 		TaxerDaoImpl dao = new TaxerDaoImpl();
-		Taxer taxer = dao.getById(id);
-		//把数据设置参数
-		req.setAttribute("taxer", taxer);
-		//转发
-		req.getRequestDispatcher("/manage/editTaxer.jsp").forward(req, resp);
+		//判断结果，是否返回数据
+		if (!dao.delete(id)) {
+			PrintWriter writer = resp.getWriter();
+			writer.print(false);
+			writer.flush();
+			writer.close();
+		}
 	}
 
 	/**
-	 * 更新数据库
+	 * 新增操作
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,16 +58,16 @@ public class EditTaxerServlet extends HttpServlet{
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
+		
 		//把实体类传入执行数据库操作，并返回执行结果
 		TaxerDaoImpl dao = new TaxerDaoImpl();
-		boolean status = dao.update(taxer);
-		
-		PrintWriter writer = resp.getWriter();
 		//判断结果，是否返回数据
-		if (!status)
-		writer.print(false);
-		writer.flush();
-		writer.close();
+		if (!dao.add(taxer)) {
+			PrintWriter writer = resp.getWriter();
+			writer.print(false);
+			writer.flush();
+			writer.close();
+		}
 	}
 
 }

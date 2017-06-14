@@ -42,8 +42,8 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 
 	@Override
 	public boolean add(Taxer t) {
-		String sql = "INSERT INTO tb_taxer (taxerCode, taxerName, mobile, address, sex, birthday, email, organId, state, mgr, admin, recordDate, recordUserId) VALUES ('12', '12', '12', '12', '12', '2017-05-01', '12', '1', '1', '1', '1', '2017-06-08', '1');";
-		Object[] args = {t.getTaxerCode(), t.getTaxerName(), t.getMobile(), t.getAddress(), t.getSex(), t.getBirthday(), t.getEmail(), t.getOrganId(), t.getState(), t.getMgr(), t.getAdmin(), t.getRecordDate(), t.getRecordUserId()};
+		String sql = "INSERT INTO tb_taxer (taxerCode, taxerName, mobile, address, sex, birthday, email, organId, state, mgr, admin, recordDate, recordUserId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE(NOW()), ?);";
+		Object[] args = {t.getTaxerCode(), t.getTaxerName(), t.getMobile(), t.getAddress(), t.getSex(), t.getBirthday(), t.getEmail(), t.getOrganId(), t.getState(), t.getMgr(), t.getAdmin(), t.getRecordUserId()};
 		return DBUtil.update(sql, args);
 	}
 
@@ -56,8 +56,8 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 
 	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "DELETE FROM tb_taxer WHERE id = ?";
+		return DBUtil.update(sql, id);
 	}
 
 	/**

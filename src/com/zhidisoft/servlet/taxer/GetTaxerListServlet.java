@@ -1,4 +1,4 @@
-package com.zhidisoft.servlet.taxOrgan;
+package com.zhidisoft.servlet.taxer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,26 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zhidisoft.dao.impl.TaxOrganDaoImpl;
 import com.zhidisoft.dao.impl.TaxerDaoImpl;
-import com.zhidisoft.entity.TaxOrgan;
 import com.zhidisoft.entity.Taxer;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 @SuppressWarnings("serial")
-@WebServlet("/getOrganServlet.do")
-public class EditTaxerServlet extends HttpServlet{
+@WebServlet("/getTaxerServlet.do")
+public class GetTaxerListServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//获取单位的数据集合
-		TaxOrganDaoImpl taxOrganDao = new TaxOrganDaoImpl();
-		List<TaxOrgan> organ = taxOrganDao.getAll();
+		//获取办税专员的数据集合
+		TaxerDaoImpl dao = new TaxerDaoImpl();
+		List<Taxer> taxer = dao.getAll();
 		
-		JSONObject jsonObject = JSONObject.fromObject(organ);
+		JSONArray array = JSONArray.fromObject(taxer);
 		PrintWriter writer = resp.getWriter();
-		writer.print(jsonObject);
+		writer.print(array);
 		writer.flush();
 		writer.close();
 	}

@@ -1,7 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/TaxSource/">
+    <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>添加纳税人</title>
@@ -36,8 +42,8 @@
                     <tr>
                         <td class="kv-label">所属税务机关</td>
                         <td class="kv-content">
-                            <select name="taxOrganId">
-                                <option value="-1" id="selectOrgan">请选择所属税务机关</option>                         
+                            <select id="selectOrgan" name="taxOrganId">
+                                <option value="-1">请选择所属税务机关</option>                         
                             </select>
                         </td>
                         <td class="kv-label">行业</td>
@@ -117,7 +123,7 @@
 		$.get("getOrganServlet.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
-				organ.append("<option value='"+val.organId+"'>"+val.organName+"</option>")
+				organ.append("<option value='"+val.id+"'>"+val.organName+"</option>")
 			})
 		},"json")
 	

@@ -31,6 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript">
+    	//easyUI数据网格
     	$('#dg').datagrid({
 	        url:'listTaxer',
 	        method: 'get',
@@ -80,8 +81,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	var deleteTaxer = function(id){
     		$.messager.confirm('提示','确认删除？',function(r){
     		    if (r){
-		    		$.get("",{"taxerId":id},function(result){
+		    		$.get("taxer.do",{"id":id},function(result){
 		    			if (result){
+		    				$.messager.alert('提示','删除失败');
+		    			} else {
+		    				parent.$.messager.alert('提示','删除成功');
 		    				$('#setBtn').click();
 		    			}
 		    		})
@@ -100,8 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$('#setBtn').click(function(){
 				$('#taxerName').textbox('setValue','');
 				//$('.textbox-text').val('');无效
-	        	$('#dg').datagrid('load', {
-	        	});
+	        	$('#dg').datagrid('load', {});//刷新
 			})
         //为添加税务专员添加事件处理函数
        		$(function(){

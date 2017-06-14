@@ -25,20 +25,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="container">
         <div class="content">
             <div title="税务人员信息" data-options="closable:false" class="basic-info">
-                <div class="column"><span class="current">添加税务人员</span></div>
+                <div class="column"><span class="current">修改税务人员信息</span></div>
+                <form>
                 <table class="kv-table">
                     <tbody>
                     <tr>
                     	<input type="hidden" value="${taxer.id }"/>
-                        <td class="kv-label">税务人员工号</td>
+                        <td class="kv-label">工号</td>
                         <td class="kv-content"><input type="text" name="taxerCode" placeholder="税务人员工号" readonly="readonly" value="${taxer.taxerCode }"></td>
-                        <td class="kv-label">税务人员名称</td>
+                        <td class="kv-label">姓名</td>
                         <td class="kv-content"><input type="text" name="taxerName" placeholder="税务人员名称" readonly="readonly" value="${taxer.taxerName }"></td>
                     </tr>
                     <tr>
-                        <td class="kv-label">税务人员电话</td>
+                        <td class="kv-label">电话</td>
                         <td class="kv-content"><input type="text" name="mobile" placeholder="税务人员电话" value="${taxer.mobile }"></td>
-                        <td class="kv-label">税务人员性别</td>
+                        <td class="kv-label">性别</td>
                         <td class="kv-content">
                             <input type="text" name="sex" placeholder="税务人员性别" readonly="readonly" value="${taxer.sex }">
                         </td>
@@ -46,26 +47,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td class="kv-label">邮箱</td>
                         <td class="kv-content"><input type="text" name="email" placeholder="邮箱" value="${taxer.email }"></td>
-                        <td class="kv-label">税务人员地址</td>
+                        <td class="kv-label">地址</td>
                         <td class="kv-content"><input type="text" name="address" placeholder="税务人员地址" value="${taxer.address }"></td>
+                    </tr>
+                    <tr>
+                    	<td class="kv-label">出生日期</td>
+                        <td class="kv-content"><input type="text" name="birthday" placeholder="出生日期" value="${taxer.birthday }"></td>
                     </tr>
                     <tr>
                     	<td class="kv-label">所属税务机关</td>
                         <td class="kv-content">
-                            <select name="organId">
+                            <select id="selectOrgan" name="organId">
                                 <option value="-1" id="selectOrgan">请选择所属税务机关</option>                         
-	                            <c:forEach var="organ" items="${organs }">
-	                                <option value="${organ.id }" ${organ.id eq taxer.organId ? "selected='selected'" : '' }>${organ.organName }</option>                         
-	                            </c:forEach>
                             </select>
                         </td>
                     	<td class="kv-label">上级领导</td>
                         <td class="kv-content">
-                            <select name="mgr">
-                                <option value="-1" id="selectOrgan" >请选择上级领导</option>                         
-	                            <c:forEach var="mgr" items="${taxers }">
-	                                <option value="${mgr.id }" ${mgr.id eq taxer.mgr ? "selected='selected'" : '' }>${mgr.taxerName }</option>                         
-	                            </c:forEach>
+                            <select id="selectMgr" name="mgr">
+                                <option value="-1" >请选择上级领导</option>                         
                             </select>
                         </td>
                     </tr>
@@ -73,35 +72,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td class="kv-label">有效标志</td>
                         <td class="kv-content">
                             <select name="state">
-                                <option value="0" id="selectOrgan" ${0 eq taxer.admin ? "selected='selected'" : '' }>无效</option>                         
-                                <option value="1" id="selectOrgan" ${1 eq taxer.admin ? "selected='selected'" : '' }>有效</option>                         
+                                <option value="0" ${0 eq taxer.admin ? "selected='selected'" : '' }>无效</option>                         
+                                <option value="1" ${1 eq taxer.admin ? "selected='selected'" : '' }>有效</option>                         
                             </select>
                         </td>
                         <td class="kv-label">系统权限</td>
                         <td class="kv-content">
-                            <select name="state">
-                                <option value="0" id="selectOrgan" ${0 eq taxer.admin ? "selected='selected'" : '' }>普通</option>                         
-                                <option value="1" id="selectOrgan" ${1 eq taxer.admin ? "selected='selected'" : '' }>管理员</option>                         
+                            <select name="admin">
+                                <option value="0" ${0 eq taxer.admin ? "selected='selected'" : '' }>普通</option>                         
+                                <option value="1" ${1 eq taxer.admin ? "selected='selected'" : '' }>管理员</option>                         
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="kv-label">录入人员</td>
                         <td class="kv-content">
-                            <select name="recordUserId">
+                            <select id="recordUser" name="recordUserId">
                                 <option value="-1" disabled="disabled">请选择办税专员</option>                         
-	                            <c:forEach var="recordUser" items="${taxers }">
-	                                <option value="${recordUser.id }" ${recordUser.id eq taxer.recordUserId ? "selected='selected'" : '' }>${recordUser.taxerName }</option>                         
-	                            </c:forEach>
                             </select>
                         </td>
                         <td class="kv-label">录入日期</td>
                         <td class="kv-content">
-							<input type="date" name="recordDate" placeholder="系统管理员标志" value="${taxer.recordDate }">
+							<input type="date" name="recordDate" placeholder="录入日期" value="${taxer.recordDate }">
 						</td>
                     </tr>
                     </tbody>
                 </table>
+                </form>
             </div>
             <div class="btn-selection">
                 <a href="javascript:void(0);" class="easyui-linkbutton save-btn" data-options="selected:true">保存</a>
@@ -112,21 +109,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script type="text/javascript">
 	$(function(){
-	/**
-		ajax请求获取外键值
-		$.post("getIndustry.do",{},function(data){
-			var industry = $("#selectIndustry")
+		$.get("getTaxerServlet.do",{},function(data){
+			var mgr = $("#selectMgr")
+			var recordUser = $("#recordUser")
 			$.each(data,function(index, val){
-				industry.append("<option value='"+val.industryId+"'>"+val.industryName+"</option>")
+				mgr.append("<option value='"+val.idd+"' "+(val.id == ${taxer.mgr } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
+				recordUser.append("<option value='"+val.id+"' "+(val.id == ${ taxer.recordUserId } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
 			})
 		},"json")
-		$.post("getOrganServlet.do",{},function(data){
+		$.get("getOrganServlet.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
-				organ.append("<option value='"+val.organId+"'>"+val.organName+"</option>")
+				organ.append("<option value='"+val.id+"' "+(val.id == ${ taxer.organId } ? "selected='selected'" : '' )+">"+val.organName+"</option>")
 			})
 		},"json")
-	**/
+	
 		/* $("select").click(function(){
 			$("option:contains(请选择)").attr('disable','disable')
 		}) */
