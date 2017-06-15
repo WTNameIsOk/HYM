@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			})
 		},"json")
 	**/
-		$.get("getOrganServlet.do",{},function(data){
+		$.get("getOrgans.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
 				organ.append("<option value='"+val.id+"'>"+val.organName+"</option>")

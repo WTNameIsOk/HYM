@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -31,13 +33,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tbody>
                     <tr>
                         <td class="kv-label">工号</td>
-                        <td class="kv-content"><input class="easyui-validatebox" data-options="required:true,validType:'num'" type="text" name="taxerCode" placeholder="税务人员工号"></td>
+                        <td class="kv-content">
+                        <input 
+                        	type="text" name="taxerCode" 
+                        	placeholder="税务人员工号"
+                        	<%
+                        		String date = Long.toString(new Date().getTime());
+                        		String no = date.substring(date.length()-12, date.length()-1);
+                        	%>
+                        	value="<%=no %>"
+                        	readonly="readonly"
+                        	title="工号自动生成"
+                        />
+                        </td>
                         <td class="kv-label">姓名</td>
                         <td class="kv-content"><input class="easyui-validatebox" data-options="required:true" type="text" name="taxerName" placeholder="税务人员名称"></td>
                     </tr>
                     <tr>
                         <td class="kv-label">电话</td>
-                        <td class="kv-content"><input class="easyui-validatebox" data-options="required:true,validType:'telephone'" type="text" name="mobile" placeholder="税务人员电话"></td>
+                        <td class="kv-content"><input maxlength="12" class="easyui-validatebox" data-options="required:true,validType:'telephone'" type="text" name="mobile" placeholder="税务人员电话"></td>
                         <td class="kv-label">性别</td>
                         <td class="kv-content">
                             <select name="sex">
@@ -48,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                         <td class="kv-label">邮箱</td>
-                        <td class="kv-content"><input class="easyui-validatebox" data-options="required:true,validType:'email'" type="text" name="email" placeholder="税务人员邮箱" ></td>
+                        <td class="kv-content"><input class="easyui-validatebox" data-options="validType:'email'" type="text" name="email" placeholder="税务人员邮箱" ></td>
                         <td class="kv-label">地址</td>
                         <td class="kv-content"><input type="text" name="address" placeholder="税务人员地址" ></td>
                     </tr>
@@ -106,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	$(function(){
 		//ajax请求获取外键值
-		$.get("getTaxerServlet.do",{},function(data){
+		$.get("getTaxers.do",{},function(data){
 			var mgr = $("#selectMgr")
 			var recordUser = $("#recordUser")
 			$.each(data,function(index, val){
@@ -114,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				recordUser.append("<option value='"+val.id+"'>"+val.taxerName+"</option>");
 			})
 		},"json")
-		$.get("getOrganServlet.do",{},function(data){
+		$.get("getOrgans.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
 				organ.append("<option value='"+val.id+"'>"+val.organName+"</option>")
@@ -124,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//ajax提交数据
 		var execute = function() {
 			if ($('form').form("validate")) {
-				$.post("taxer.do",$("form").serialize(),function(result){
+				$.post("addTaxer.do",$("form").serialize(),function(result){
 					if (result) {
 						parent.$.messager.alert('提示','添加失败');
 					} else {

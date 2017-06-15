@@ -22,7 +22,7 @@ import com.zhidisoft.entity.Taxer;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/editTaxer")
+@WebServlet("/editTaxer.do")
 public class EditTaxerServlet extends HttpServlet{
 
 	/**

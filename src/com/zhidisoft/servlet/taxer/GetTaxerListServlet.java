@@ -16,7 +16,7 @@ import com.zhidisoft.entity.Taxer;
 import net.sf.json.JSONArray;
 
 @SuppressWarnings("serial")
-@WebServlet("/getTaxerServlet.do")
+@WebServlet("/getTaxers.do")
 public class GetTaxerListServlet extends HttpServlet{
 
 	@Override

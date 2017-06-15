@@ -17,20 +17,20 @@ import com.zhidisoft.dao.impl.TaxerDaoImpl;
 import com.zhidisoft.entity.Taxer;
 
 /**
- * taxer的增、删操作服务器
+ * taxer的删除操作服务器
  * 
  * @author Administrator
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/taxer.do")
-public class TaxerServlet extends HttpServlet {
+@WebServlet("/deleteTaxer.do")
+public class DeleteTaxerServlet extends HttpServlet {
 
 	/**
 	 * 删除操作
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//获取id参数
 		Integer id = Integer.parseInt(req.getParameter("id"));
 
@@ -46,25 +46,19 @@ public class TaxerServlet extends HttpServlet {
 	}
 
 	/**
-	 * 新增操作
+	 * 判断数据是否占用
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//获取参数集合，封装为实体类
-		Map<String, String[]> params = req.getParameterMap();
-		Taxer taxer = new Taxer();
-		try {
-			BeanUtils.populate(taxer, params);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//获取id参数
+		Integer id = Integer.parseInt(req.getParameter("id"));
+
 		//把实体类传入执行数据库操作，并返回执行结果
 		TaxerDaoImpl dao = new TaxerDaoImpl();
 		//判断结果，是否返回数据
-		if (!dao.add(taxer)) {
+		if (dao.isBusy(id)) {
 			PrintWriter writer = resp.getWriter();
-			writer.print(false);
+			writer.print(true);
 			writer.flush();
 			writer.close();
 		}

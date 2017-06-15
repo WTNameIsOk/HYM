@@ -16,7 +16,7 @@ import com.zhidisoft.entity.TaxOrgan;
 import net.sf.json.JSONArray;
 
 @SuppressWarnings("serial")
-@WebServlet("/getOrganServlet.do")
+@WebServlet("/getOrgans.do")
 public class GetOrganListServlet extends HttpServlet{
 
 	@Override

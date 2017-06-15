@@ -49,8 +49,8 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 
 	@Override
 	public boolean update(Taxer t) {
-		String sql = "UPDATE tb_taxer SET mobile=?,address=?,sex=?, birthday = ? , email = ? , organId = ? , state = ? , mgr = ? , admin = ? WHERE id = ?";
-		Object[] args = {t.getMobile(),t.getAddress(),t.getSex(), t.getBirthday() , t.getEmail() , t.getOrganId() , t.getState() , t.getMgr(), t.getAdmin(), t.getId()};
+		String sql = "UPDATE tb_taxer SET mobile=?,address=?,sex=?, birthday = ? , email = ? , organId = ? , state = ? , mgr = ? , admin = ? , recordUserId = ?  WHERE id = ?";
+		Object[] args = {t.getMobile(),t.getAddress(),t.getSex(), t.getBirthday() , t.getEmail() , t.getOrganId() , t.getState() , t.getMgr(), t.getAdmin(), t.getRecordUserId(), t.getId()};
 		return DBUtil.update(sql, args);
 	}
 
@@ -103,8 +103,8 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 	 * 是否存在子记录
 	 * @return
 	 */
-	public boolean isHaveTaxOrgan(Integer id) {
-		String sql = "SELECT COUNT(1) FROM tb_taxer tt RIGHT JOIN tb_tax_source tts ON tt.id=tts.approverId RIGHT JOIN tb_taxer t1 ON tt.id = t1.mgr  WHERE tt.id=1 ";
+	public boolean isBusy(Integer id) {
+		String sql = "SELECT count(1) c FROM tb_taxer tt LEFT JOIN tb_tax_source tts ON tt.id=tts.approverId LEFT JOIN tb_taxer t1 ON tt.id = t1.mgr  WHERE tt.id = ? ;";
 		List<Map<String, String>> list = DBUtil.query(sql, id);
 		
 		if (list != null && !list.isEmpty()) {

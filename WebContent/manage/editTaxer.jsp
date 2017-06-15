@@ -131,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//ajax提交数据
 		var execute = function() {
 			if ($('form').form("validate")) {
-				$.post("editTaxer",$("form").serialize(),function(result){
+				$.post("editTaxer.do",$("form").serialize(),function(result){
 					if (result) {
 						parent.$.messager.alert('提示','修改失败');
 					} else {
