@@ -1,0 +1,13 @@
+更改背景颜色
+
+taxer	
+	删除----数据占用(sql语句待完善)
+	重置----
+			更改页面 为 还原
+	
+	查询输入框内的清空
+	
+		trigger() 方法触发被选元素的指定事件类型。
+			$(selector).trigger(event,[param1,param2,...])
+
+	easyUI	$.massage.

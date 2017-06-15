@@ -96,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		    	//当前数据是否有其他数据连接
     		    	$.get("deleteTaxer.do",{"id":id},function(result){
 		    			if (result){
-		    				parent.$.messager.confirm('警告','当前操作的数据与其他数据相关联，删除该数据则会导致其他数据一并删除。\n请确认是否执行删除操作？',function(re){
+		    				parent.$.messager.confirm('警告','当前操作的数据与其他数据相关联，删除该数据则会导致其他数据一并删除。<hr/>请确认是否执行删除操作？',function(re){
 		    					if (re) {
 				    				deleteOperation(id);
 		    					}
