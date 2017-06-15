@@ -38,7 +38,8 @@ public class LoginServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = EncryptUtil.encryptMD5(req.getParameter("password"));
 		Boolean rem = Boolean.parseBoolean(req.getParameter("rem"));
-
+		//System.out.println(password);
+		
 		// …Ë÷√cookie
 		if (rem) {
 			Cookie cookie = new Cookie("username", username);

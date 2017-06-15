@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            	    	$('#error').show();
 	            			$('#info').text('密码错误').css("color","red");
 	        			} else {
-	        				parent.$.messager.alert('提示','密码修改成功\r\n下次登录请使用新密码');
+	        				parent.$.messager.alert('提示','密码修改成功\r\n下次登录请使用新密码','warning');
 	        	    		reset();
 	        				parent.$("#mdfPwd").window('close');
 	        			}

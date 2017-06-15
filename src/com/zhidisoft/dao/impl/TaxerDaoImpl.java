@@ -98,4 +98,22 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 		List<Map<String, String>> list = DBUtil.query(sb.toString(), (pageNumber - 1) * pageSize, pageSize);
 		return list;
 	};
+	
+	/**
+	 * 是否存在子记录
+	 * @return
+	 */
+	public boolean isHaveTaxOrgan(Integer id) {
+		String sql = "SELECT COUNT(1) FROM tb_taxer tt RIGHT JOIN tb_tax_source tts ON tt.id=tts.approverId RIGHT JOIN tb_taxer t1 ON tt.id = t1.mgr  WHERE tt.id=1 ";
+		List<Map<String, String>> list = DBUtil.query(sql, id);
+		
+		if (list != null && !list.isEmpty()) {
+			Integer count = Integer.parseInt(list.get(0).get("c"));
+			if (count > 0 ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

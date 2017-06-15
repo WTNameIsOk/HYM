@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td class="kv-content"><input type="text" class="easyui-datebox" name="birthday" placeholder="出生日期"></td>
                     	<td class="kv-label">所属税务机关</td>
                         <td class="kv-content">
-                            <select id="selectOrgan" name="organId">
+                            <select id="selectOrgan" class="easyui-validatebox" data-options="validType:'selected'" name="organId">
                                 <option value="-1" id="selectOrgan">请选择所属税务机关</option>                         
                             </select>
                         </td>
@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                     	<td class="kv-label">上级领导</td>
                         <td class="kv-content">
-                            <select id="selectMgr" name="mgr">
+                            <select id="selectMgr" class="easyui-validatebox" data-options="validType:'selected'" name="mgr">
                                 <option value="-1" >请选择上级领导</option>                         
                             </select>
                         </td>
@@ -128,9 +128,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if (result) {
 						parent.$.messager.alert('提示','添加失败');
 					} else {
-						parent.$.messager.alert('提示','添加成功');
+						parent.$.messager.alert('提示','添加成功','info',function(){
+							top.frames[3].$('#dg').datagrid('load');//刷新数据
+						});
 	    				parent.$("#topWindow").window('close');
-	    				parent.$('#dg').datagrid('load', {});//刷新父窗口 
 					}
 				})
 			}
@@ -147,6 +148,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		$('a:contains(保存)').click(function(){
     		execute();
     	})
+    	
+    	//重置按钮
 	
 	})
 	//自定义easyUI表单验证
@@ -173,6 +176,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	},
 	      	message : "请正确填写您的联系电话."
 	     },
+	     selected : {
+	    	 validator : function(value) {
+			       return value != -1;
+		      	},
+		      	message : "改选项为必选项."
+	     }
   	});
 </script>
 </html>

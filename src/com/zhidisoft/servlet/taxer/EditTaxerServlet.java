@@ -56,14 +56,13 @@ public class EditTaxerServlet extends HttpServlet{
 		}
 		//把实体类传入执行数据库操作，并返回执行结果
 		TaxerDaoImpl dao = new TaxerDaoImpl();
-		boolean status = dao.update(taxer);
-		
-		PrintWriter writer = resp.getWriter();
 		//判断结果，是否返回数据
-		if (!status)
-		writer.print(false);
-		writer.flush();
-		writer.close();
+		if (!dao.update(taxer)) {
+			PrintWriter writer = resp.getWriter();
+			writer.print(false);
+			writer.flush();
+			writer.close();
+		}
 	}
 
 }

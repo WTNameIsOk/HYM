@@ -79,14 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	}
     	//删除操作
     	var deleteTaxer = function(id){
-    		$.messager.confirm('提示','确认删除？',function(r){
+    		parent.$.messager.confirm('提示','确认删除？',function(r){
     		    if (r){
+    		    	//当前数据是否有其他数据连接
+    		    	
+    		    	//提交删除请求
 		    		$.get("taxer.do",{"id":id},function(result){
 		    			if (result){
-		    				$.messager.alert('提示','删除失败');
+		    				parent.$.messager.alert('提示','删除失败');
 		    			} else {
-		    				parent.$.messager.alert('提示','删除成功');
-		    				$('#setBtn').click();
+		    				$.messager.alert('提示','删除成功','',function(){
+		    					top.frames[3].$('#dg').datagrid('load');
+		    				});
 		    			}
 		    		})
     			}
@@ -104,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$('#setBtn').click(function(){
 				$('#taxerName').textbox('setValue','');
 				//$('.textbox-text').val('');无效
-	        	$('#dg').datagrid('load', {});//刷新
+	        	$('#dg').datagrid('load');//刷新
 			})
         //为添加税务专员添加事件处理函数
        		$(function(){
@@ -126,7 +130,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             options.height = !options.height ? 400 : options.height;
             options.url = !options.url ? "404.html" : options.url;
             options.title = !options.title ? "" : options.title;
-            options.operation = !options.operation ? "" : options.operation;
 
             parent.$("#topWindow").window({
                 title : options.title,

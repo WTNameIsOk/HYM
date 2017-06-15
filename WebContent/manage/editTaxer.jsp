@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <table class="kv-table">
                     <tbody>
                     <tr>
-                    	<input type="hidden" value="${taxer.id }"/>
+                    	<input type="hidden" name="id" value="${taxer.id }"/>
                         <td class="kv-label">工号</td>
                         <td class="kv-content"><input type="text" name="taxerCode" placeholder="税务人员工号" readonly="readonly" value="${taxer.taxerCode }"></td>
                         <td class="kv-label">姓名</td>
@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var mgr = $("#selectMgr")
 			var recordUser = $("#recordUser")
 			$.each(data,function(index, val){
-				mgr.append("<option value='"+val.idd+"' "+(val.id == ${taxer.mgr } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
+				mgr.append("<option value='"+val.id+"' "+(val.id == ${taxer.mgr } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
 				recordUser.append("<option value='"+val.id+"' "+(val.id == ${ taxer.recordUserId } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
 			})
 		},"json")
@@ -127,7 +127,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/* $("select").click(function(){
 			$("option:contains(请选择)").attr('disable','disable')
 		}) */
-	
+
+		//ajax提交数据
+		var execute = function() {
+			if ($('form').form("validate")) {
+				$.post("editTaxer",$("form").serialize(),function(result){
+					if (result) {
+						parent.$.messager.alert('提示','修改失败');
+					} else {
+						parent.$.messager.alert('提示','修改成功','info',function(){
+							top.frames[3].$('#dg').datagrid('load');//刷新数据
+						});
+	    				parent.$("#topWindow").window('close');
+					}
+				})
+			}
+		}
+
+    	//定义回车键执行
+  		$("input").keydown(function() {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+            	execute();
+            }
+       	});
+
+    	//定义保存按钮执行
+  		$('a:contains(保存)').click(function(){
+    		execute();
+    	})
 	
 	})
 </script>
