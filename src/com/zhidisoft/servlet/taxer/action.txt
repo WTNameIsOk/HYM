@@ -1,13 +1,29 @@
 更改背景颜色
 
 taxer	
-	删除----数据占用(sql语句待完善)
+	删除----数据占用(sql语句待完善)	UNION
 	重置----
 			更改页面 为 还原
+	录入人员--- user
 	
+	email下拉框
+	复选框功能
 	查询输入框内的清空
-	
+=======================================================================	
 		trigger() 方法触发被选元素的指定事件类型。
 			$(selector).trigger(event,[param1,param2,...])
 
-	easyUI	$.massage.
+	easyUI	
+			$.messager.show({
+				title:'My Title',
+				msg:'Message will be closed after 5 seconds.',
+				timeout:5000,
+				showType:'slide'
+			});
+	
+	#4f5c65		#1da028
+	
+=======================================================================
+模糊查询
+
+

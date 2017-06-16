@@ -26,8 +26,12 @@ public class LoginServlet extends HttpServlet {
 		String Code = (String) req.getSession().getAttribute("KAPTCHA_SESSION_KEY");
 
 		PrintWriter writer = resp.getWriter();
-		if (Code.equalsIgnoreCase(iptCode)) {
-			writer.print(true);
+		if (Code != null) {
+			if (!Code.equalsIgnoreCase(iptCode)) {
+				writer.print("验证码错误");
+			}
+		} else {
+			writer.print("验证码已过期，请点击刷新");
 		}
 		writer.flush();
 		writer.close();
@@ -38,26 +42,26 @@ public class LoginServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = EncryptUtil.encryptMD5(req.getParameter("password"));
 		Boolean rem = Boolean.parseBoolean(req.getParameter("rem"));
-		//System.out.println(password);
-		
+		// System.out.println(password);
+
 		// 设置cookie
 		if (rem) {
 			Cookie cookie = new Cookie("username", username);
 			resp.addCookie(cookie);
 		}
-		
-		//验证用户
+
+		// 验证用户
 		HttpSession session = req.getSession();
 		UserDaoImpl dao = new UserDaoImpl();
 		User user = dao.login(username, password);
 		PrintWriter writer = resp.getWriter();
-		
+
 		if (user != null) {
 			session.setAttribute("user", user);
 		} else {
 			writer.println("登陆失败");
 		}
-		
+
 		writer.flush();
 		writer.close();
 	}

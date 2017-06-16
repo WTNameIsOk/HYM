@@ -7,16 +7,16 @@ import com.zhidisoft.entity.TaxPayer;
 
 public class TaxPayerDaoImpl extends BaseDao<TaxPayer> {
 
-	@Override
+	/**
+	 * 查询所有纳税人信息
+	 * @return - 返回所有纳税人信息的数据集合
+	 */
 	public List<TaxPayer> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getAll(TaxPayer.class, "tax_payer");
 	}
 
-	@Override
 	public TaxPayer getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getById(TaxPayer.class, "tax_payer", id);
 	}
 
 	@Override
@@ -31,10 +31,8 @@ public class TaxPayerDaoImpl extends BaseDao<TaxPayer> {
 		return false;
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete("tax_payer", id);
 	}
 
 }

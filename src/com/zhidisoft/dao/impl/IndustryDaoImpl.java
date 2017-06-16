@@ -7,16 +7,16 @@ import com.zhidisoft.entity.Industry;
 
 public class IndustryDaoImpl extends BaseDao<Industry> {
 
-	@Override
+	/**
+	 * 查询所有行业
+	 * @return - 返回所有行业的数据集合
+	 */
 	public List<Industry> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getAll(Industry.class, "industry");
 	}
 
-	@Override
 	public Industry getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getById(Industry.class, "industry", id);
 	}
 
 	@Override
@@ -31,10 +31,8 @@ public class IndustryDaoImpl extends BaseDao<Industry> {
 		return false;
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete("industry", id);
 	}
 
 }

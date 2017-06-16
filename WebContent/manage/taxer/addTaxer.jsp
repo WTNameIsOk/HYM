@@ -120,30 +120,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	$(function(){
 		//ajax请求获取外键值
+		//请求上级领导的数据
 		$.get("getTaxers.do",{},function(data){
 			var mgr = $("#selectMgr")
-			var recordUser = $("#recordUser")
 			$.each(data,function(index, val){
 				mgr.append("<option value='"+val.id+"'>"+val.taxerName+"</option>");
-				recordUser.append("<option value='"+val.id+"'>"+val.taxerName+"</option>");
 			})
 		},"json")
+		//请求单位的数据
 		$.get("getOrgans.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
 				organ.append("<option value='"+val.id+"'>"+val.organName+"</option>")
 			})
 		},"json")
+		//请求录入人员的数据
+		$.get("getUsers.do",{},function(data){
+			var recordUser = $("#recordUser")
+			$.each(data,function(index, val){
+				recordUser.append("<option value='"+val.id+"' "+(val.id == ${user.id } ? "selected='selected'" : '' )+">"+val.username+"</option>");
+			})
+		},"json")
 	
 		//ajax提交数据
 		var execute = function() {
 			if ($('form').form("validate")) {
-				$.post("addTaxer.do",$("form").serialize(),function(result){
+				$.post("manage/taxer/add.do",$("form").serialize(),function(result){
 					if (result) {
 						parent.$.messager.alert('提示','添加失败');
 					} else {
 						parent.$.messager.alert('提示','添加成功','info',function(){
-							top.frames[3].$('#dg').datagrid('load');//刷新数据
+							top.frames[3].$('#dg').datagrid('load',{});//刷新数据
 						});
 	    				parent.$("#topWindow").window('close');
 					}
@@ -163,7 +170,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		execute();
     	})
     	
-    	//重置按钮
+    	//为重置按钮添加事件处理函数
+		$('.reset-btn').click(function(){
+			$('form').form('reset');
+		})
 	
 	})
 	//自定义easyUI表单验证

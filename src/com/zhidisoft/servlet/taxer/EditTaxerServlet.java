@@ -22,7 +22,7 @@ import com.zhidisoft.entity.Taxer;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/editTaxer.do")
+@WebServlet("/manage/taxer/edit.do")
 public class EditTaxerServlet extends HttpServlet{
 
 	/**
@@ -38,7 +38,7 @@ public class EditTaxerServlet extends HttpServlet{
 		//把数据设置参数
 		req.setAttribute("taxer", taxer);
 		//转发
-		req.getRequestDispatcher("/manage/editTaxer.jsp").forward(req, resp);
+		req.getRequestDispatcher("/manage/taxer/editTaxer.jsp").forward(req, resp);
 	}
 
 	/**

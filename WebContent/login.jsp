@@ -114,9 +114,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		//验证码验证
 		var validateCode = $.get("login.do",{"code":captcha},function(result){
-				if (!result) {
+				if (result) {
 					$("#error").show();
-					$("#info").text("验证码错误").css("color","red");
+					$("#info").text(result).css("color","red");
 					pushCode();
 					return;
 				}else{
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		//验证码通过之后进行登录
 		$.when(validateCode).done(function(result){
-			if (result) {
+			if (!result) {
 				$.post(
 					"login.do",
 					{

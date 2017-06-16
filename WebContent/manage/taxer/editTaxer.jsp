@@ -109,18 +109,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script type="text/javascript">
 	$(function(){
-		$.get("getTaxerServlet.do",{},function(data){
+		//请求上级领导的数据
+		$.get("getTaxers.do",{},function(data){
 			var mgr = $("#selectMgr")
-			var recordUser = $("#recordUser")
 			$.each(data,function(index, val){
 				mgr.append("<option value='"+val.id+"' "+(val.id == ${taxer.mgr } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
-				recordUser.append("<option value='"+val.id+"' "+(val.id == ${ taxer.recordUserId } ? "selected='selected'" : '' )+">"+val.taxerName+"</option>");
 			})
 		},"json")
-		$.get("getOrganServlet.do",{},function(data){
+		//请求单位的数据
+		$.get("getOrgans.do",{},function(data){
 			var organ = $("#selectOrgan")
 			$.each(data,function(index, val){
 				organ.append("<option value='"+val.id+"' "+(val.id == ${ taxer.organId } ? "selected='selected'" : '' )+">"+val.organName+"</option>")
+			})
+		},"json")
+		//请求录入人员的数据
+		$.get("getUsers.do",{},function(data){
+			var recordUser = $("#recordUser")
+			$.each(data,function(index, val){
+				recordUser.append("<option value='"+val.id+"' "+(val.id == ${taxer.recordUserId } ? "selected='selected'" : '' )+">"+val.username+"</option>");
 			})
 		},"json")
 	
@@ -131,12 +138,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//ajax提交数据
 		var execute = function() {
 			if ($('form').form("validate")) {
-				$.post("editTaxer.do",$("form").serialize(),function(result){
+				$.post("manage/taxer/edit.do",$("form").serialize(),function(result){
 					if (result) {
 						parent.$.messager.alert('提示','修改失败');
 					} else {
 						parent.$.messager.alert('提示','修改成功','info',function(){
-							top.frames[3].$('#dg').datagrid('load');//刷新数据
+							top.frames[3].$('#dg').datagrid('load',{});//刷新数据
 						});
 	    				parent.$("#topWindow").window('close');
 					}
@@ -155,6 +162,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		$('a:contains(保存)').click(function(){
     		execute();
     	})
+    	
+    	//为重置按钮添加事件处理函数
+		$('.reset-btn').click(function(){
+			$('form').form('reset');
+		})
 	
 	})
 </script>

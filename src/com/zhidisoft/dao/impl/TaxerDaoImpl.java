@@ -1,43 +1,24 @@
 package com.zhidisoft.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.Taxer;
-import com.zhidisoft.util.BeanUtil;
 import com.zhidisoft.util.DBUtil;
 
 public class TaxerDaoImpl extends BaseDao<Taxer> {
 
-	@Override
+	/**
+	 * 查询所有税务人员
+	 * @return - 返回所有税务人员的数据集合
+	 */
 	public List<Taxer> getAll() {
-		String sql = "select * from tb_taxer";
-		List<Map<String, String>> mapList = DBUtil.query(sql);
-		List<Taxer> list = null;
-		if (mapList != null && !mapList.isEmpty()) {
-			list = new ArrayList<Taxer>();
-			for (Map<String, String> map : mapList) {
-				Taxer taxer = new Taxer();
-				BeanUtil.mapToBean(taxer, map);
-				list.add(taxer);
-			}
-		}
-		
-		return list;
+		return super.getAll(Taxer.class, "taxer");
 	}
 
-	@Override
 	public Taxer getById(Integer id) {
-		String sql = "select * from tb_taxer where id = ?";
-		List<Map<String, String>> mapList = DBUtil.query(sql, id);
-		Taxer taxer = null;
-		if (mapList != null && !mapList.isEmpty()) {
-			taxer = new Taxer();
-			BeanUtil.mapToBean(taxer, mapList.get(0));
-		}
-		return taxer;
+		return super.getById(Taxer.class, "taxer", id);
 	}
 
 	@Override
@@ -54,10 +35,8 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 		return DBUtil.update(sql, args);
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		String sql = "DELETE FROM tb_taxer WHERE id = ?";
-		return DBUtil.update(sql, id);
+		return super.delete("taxer", id);
 	}
 
 	/**
@@ -88,7 +67,7 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"SELECT tb.*,tto.organName FROM tb_taxer tb LEFT JOIN tb_tax_organ tto ON tb.organId=tto.id where 1=1");
+				"SELECT tb.*,tto.organName,tu.username,tt.taxerName mgrName FROM tb_taxer tb LEFT JOIN tb_tax_organ tto ON tb.organId=tto.id LEFT JOIN tb_user tu ON tb.recordUserId=tu.id LEFT JOIN tb_taxer tt ON tb.mgr=tt.id WHERE 1=1");
 		if (taxerName != null && taxerName.length() > 0) {
 			// 办税专员名字用模糊查询
 			sb.append(" AND tb.taxerName  LIKE '%" + taxerName + "%'");
@@ -100,20 +79,17 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 	};
 	
 	/**
-	 * 是否存在子记录
+	 * 存在子记录的条数
 	 * @return
 	 */
-	public boolean isBusy(Integer id) {
-		String sql = "SELECT count(1) c FROM tb_taxer tt LEFT JOIN tb_tax_source tts ON tt.id=tts.approverId LEFT JOIN tb_taxer t1 ON tt.id = t1.mgr  WHERE tt.id = ? ;";
-		List<Map<String, String>> list = DBUtil.query(sql, id);
-		
+	public Integer isBusy(Integer id) {
+		String sql = "SELECT * FROM tb_taxer tt RIGHT JOIN tb_tax_source tts ON tt.id=tts.approverId WHERE tt.id=? UNION SELECT * FROM tb_taxer tt RIGHT JOIN tb_taxer t1 ON tt.id = t1.mgr  WHERE tt.id=? ;";
+		List<Map<String, String>> list = DBUtil.query(sql, id, id);
+		Integer count = 0;
 		if (list != null && !list.isEmpty()) {
-			Integer count = Integer.parseInt(list.get(0).get("c"));
-			if (count > 0 ) {
-				return true;
-			}
+			count = list.size();
 		}
-		return false;
+		return count;
 	}
 
 }

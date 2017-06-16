@@ -10,6 +10,13 @@ import com.zhidisoft.util.DBUtil;
 
 public class UserDaoImpl extends BaseDao<User> {
 
+	/**
+	 * 查询登录验证信息
+	 * @param username
+	 * @param password
+	 * @return - 若用户名、密码匹配成功，则返回此用户的信息封装对象User
+	 * 	反之则为null
+	 */
 	public User login(String username,String password) {
 		User user = null;
 		String sql = "select * from tb_user where username=? and password=?";
@@ -22,17 +29,17 @@ public class UserDaoImpl extends BaseDao<User> {
 		}
 		return user;
 	}
-	
-	@Override
+
+	/**
+	 * 查询所有用户信息
+	 * @return - 返回所有用户信息的数据集合
+	 */	
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getAll(User.class, "user");
 	}
 
-	@Override
 	public User getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getById(User.class, "user", id);
 	}
 
 	@Override
@@ -48,10 +55,8 @@ public class UserDaoImpl extends BaseDao<User> {
 		return DBUtil.update(sql, args);
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete("user", id);
 	}
 
 }

@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
     	//easyUI数据网格
     	$('#dg').datagrid({
-	        url:'listTaxer',
+	        url:'manage/taxer/list',
 	        method: 'get',
 	        loadMsg:"数据加载中...",
 	        rownumbers:true,
@@ -47,20 +47,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        toolbar:'#tb',
 	        pageSize:10,
 	        columns:[[
-	    		{field:'taxerCode',title:'税务人员工号'},
-	    		{field:'taxerName',title:'税务人员名称'},
-	    		{field:'mobile',title:'税务人员电话'},
-	    		{field:'address',title:'税务人员地址'},
-	    		{field:'sex',title:'税务人员性别'},
-	    		{field:'birthday',title:'出生日期'},
-	    		{field:'email',title:'电子邮件'},
-	    		{field:'organName',title:'所属税务机关'},
-	    		{field:'state',title:'有效标志'},
-	    		{field:'mgr',title:'上级领导'},
-	    		{field:'admin',title:'系统管理员标志'},
-	    		{field:'recordDate',title:'录入日期'},
-	    		{field:'recordUserId',title:'录入人员'},
-	    		{field:'operation',title:'操作',
+	    		{field:'taxerCode',title:'税务人员工号',align:'center'},
+	    		{field:'taxerName',title:'税务人员名称',align:'center'},
+	    		{field:'mobile',title:'税务人员电话',align:'center'},
+	    		{field:'address',title:'税务人员地址',align:'center'},
+	    		{field:'sex',title:'税务人员性别',align:'center'},
+	    		{field:'birthday',title:'出生日期',align:'center'},
+	    		{field:'email',title:'电子邮件',align:'center'},
+	    		{field:'organName',title:'所属税务机关',align:'center'},//表联接
+	    		{field:'state',title:'有效标志',align:'center',
+					formatter: function(value,row,index){
+						return row.admin == 0 ? "无效" : "有效";
+					}
+				},
+	    		{field:'mgrName',title:'上级领导',align:'center'},//表联接
+	    		{field:'admin',title:'系统管理员标志',align:'center',
+					formatter: function(value,row,index){
+						return row.admin == 0 ? "普通" : "管理员";
+					}
+				},
+	    		{field:'recordDate',title:'录入日期',align:'center'},
+	    		{field:'username',title:'录入人员',align:'center'},//表联接
+	    		{field:'operation',title:'操  &nbsp; 作',align:'center',
 					formatter: function(value,row,index){
 						return "<a href='javascript:' onclick='edit("+row.id+")'>修改</a>|<a href='javascript:' onclick='deleteTaxer("+row.id+")'>删除</a>"
 					}
@@ -73,13 +81,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 width : 750,
                 height : 600,
                 title : "修改税务人员信息",
-                url : "editTaxer?id="+id,
+                url : "manage/taxer/edit.do?id="+id,
                 
             })
     	}
     	//提交删除请求
     	var deleteOperation = function(id){
-    		$.post("deleteTaxer.do",{"id":id},function(result){
+    		$.post("manage/taxer/delete.do",{"id":id},function(result){
     			if (result){
     				parent.$.messager.alert('提示','删除失败');
     			} else {
@@ -94,9 +102,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		parent.$.messager.confirm('提示','确认删除？',function(r){
     		    if (r){
     		    	//当前数据是否有其他数据连接
-    		    	$.get("deleteTaxer.do",{"id":id},function(result){
-		    			if (result){
-		    				parent.$.messager.confirm('警告','当前操作的数据与其他数据相关联，删除该数据则会导致其他数据一并删除。<hr/>请确认是否执行删除操作？',function(re){
+    		    	$.get("manage/taxer/delete.do",{"id":id},function(result){
+		    			if (result > 0){
+		    				parent.$.messager.confirm('警告','当前数据被占用，删除该数据则会导致其他数据(共'+result+'条)一并删除。<hr/>请确认是否执行删除操作？',function(re){
 		    					if (re) {
 				    				deleteOperation(id);
 		    					}
@@ -105,7 +113,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    				deleteOperation(id);
 		    			}
 		    		})
-    		    	
     			}
    		    })
     	}
@@ -120,8 +127,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	//重置并刷新显示
 			$('#setBtn').click(function(){
 				$('#taxerName').textbox('setValue','');
-				//$('.textbox-text').val('');无效
-	        	$('#dg').datagrid('load');//刷新
+	        	$('#dg').datagrid('load',{});//刷新
+	        	//$('#dg').datagrid('reload');
 			})
         //为添加税务专员添加事件处理函数
        		$(function(){
@@ -130,10 +137,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                  width : 750,
 	                  height : 600,
 	                  title : "新增税务人员",
-	                  url : "manage/addTaxer.jsp"
+	                  url : "manage/taxer/addTaxer.jsp"
 	              });
 	           });
-       });
+       		});
         /**
          *打开在父窗口中打开window
          */

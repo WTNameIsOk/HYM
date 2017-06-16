@@ -69,14 +69,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <ul class="sider-nav">
                      <!--<li class="current">-->
                      <li>
-                        <a href="javascript:addTab('办税专员管理','manage/listTaxer.jsp');">
+                        <a href="javascript:addTab('办税专员管理','manage/taxer/listTaxer.jsp');">
                             <span class="iconfont sider-nav-icon">&#xe620;</span>
                             <span class="sider-nav-title">办税专员管理</span>
                             <i class="iconfont">&#xe642;</i>
                         </a>
                      </li>
                     <li>
-                        <a href="javascript:addTab('纳税人管理','manage/listTaxPayer.html');">
+                        <a href="javascript:addTab('纳税人管理','manage/taxPayer/listTaxPayer.jsp');">
                             <span class="iconfont sider-nav-icon">&#xe620;</span>
                             <span class="sider-nav-title">纳税人管理</span>
                             <i class="iconfont">&#xe642;</i>
@@ -89,9 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <i class="iconfont">&#xe642;</i>
                         </a>
                         <ul class="sider-nav-s">
-                            <li class="active"><a href="javascript:addTab('任务查询','manage/searchTask.html')">调查任务查询</a></li>
-                            <li><a href="javascript:addTab('调查任务录入','manage/addTask.html')">调查任务录入</a></li>
-                            <li><a href="javascript:addTab('未调查企业统计','manage/statistical.html')">未被调查企业统计</a></li>
+                            <li class="active"><a href="javascript:addTab('任务查询','manage/tesk/searchTask.html')">调查任务查询</a></li>
+                            <li><a href="javascript:addTab('调查任务录入','manage/tesk/addTask.html')">调查任务录入</a></li>
+                            <li><a href="javascript:addTab('未调查企业统计','manage/tesk/statistical.html')">未被调查企业统计</a></li>
                         </ul>
                      </li>
                      <li>

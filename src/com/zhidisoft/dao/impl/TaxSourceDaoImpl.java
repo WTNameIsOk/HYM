@@ -7,16 +7,16 @@ import com.zhidisoft.entity.TaxSource;
 
 public class TaxSourceDaoImpl extends BaseDao<TaxSource> {
 
-	@Override
+	/**
+	 * 查询所有基础税源信息
+	 * @return - 返回所有税源信息的数据集合
+	 */
 	public List<TaxSource> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getAll(TaxSource.class, "tax_source");
 	}
 
-	@Override
 	public TaxSource getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getById(TaxSource.class, "tax_source", id);
 	}
 
 	@Override
@@ -31,10 +31,8 @@ public class TaxSourceDaoImpl extends BaseDao<TaxSource> {
 		return false;
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete("tax_source", id);
 	}
 
 }

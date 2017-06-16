@@ -1,36 +1,22 @@
 package com.zhidisoft.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxOrgan;
-import com.zhidisoft.util.BeanUtil;
-import com.zhidisoft.util.DBUtil;
 
 public class TaxOrganDaoImpl extends BaseDao<TaxOrgan> {
 
-	@Override
+	/**
+	 * 查询所有税务单位
+	 * @return - 返回所有税务单位的数据集合
+	 */
 	public List<TaxOrgan> getAll() {
-		String sql = "select * from tb_tax_organ";
-		List<Map<String, String>> mapList = DBUtil.query(sql);
-		List<TaxOrgan> list = null;
-		if (mapList != null && !mapList.isEmpty()) {
-			list = new ArrayList<TaxOrgan>();
-			for (Map<String, String> map : mapList) {
-				TaxOrgan taxOrgan = new TaxOrgan();
-				BeanUtil.mapToBean(taxOrgan, map);
-				list.add(taxOrgan);
-			}
-		}
-		return list;
+		return super.getAll(TaxOrgan.class, "tax_organ");
 	}
 
-	@Override
 	public TaxOrgan getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getById(TaxOrgan.class, "tax_organ", id);
 	}
 
 	@Override
@@ -45,10 +31,8 @@ public class TaxOrganDaoImpl extends BaseDao<TaxOrgan> {
 		return false;
 	}
 
-	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete("tax_organ", id);
 	}
 
 }
