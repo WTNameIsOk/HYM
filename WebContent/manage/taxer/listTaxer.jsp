@@ -20,12 +20,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
     <div class="container">
        <table id="dg" style="width:100%;"></table>
-      <div id="tb" style="padding:0 30px;">
+      <form><div id="tb" style="padding:0 30px;">
         办税专员姓名: <input class="easyui-textbox" id="taxerName" type="text" name="payerName" style="width:166px;height:35px;line-height:35px;"/>
         <a href="javascript:void(0);" id="searchBtn" class="easyui-linkbutton" iconCls="icon-search" data-options="selected:true">查询</a>
         <a href="javascript:void(0);" id="setBtn" class="easyui-linkbutton" iconCls="icon-reload">重置</a>
         <a href="javascript:void(0);" id="addBtn" class="easyui-linkbutton" iconCls="icon-add">添加办税专员</a>
-      </div>
+      </div></form>
     </div>
     <script type="text/javascript" src="static/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
@@ -123,6 +123,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		name: taxerName
         	});
         })
+        //定义回车键执行查询
+  		$(function(){
+  			$("input").keydown(function() {
+	            if (event.keyCode == "13") {//keyCode=13是回车键
+	            	$('#searchBtn').click();
+	            }
+       		});
+  		})
+
         //为重置按钮添加事件处理函数
 	    	//重置并刷新显示
 			$('#setBtn').click(function(){

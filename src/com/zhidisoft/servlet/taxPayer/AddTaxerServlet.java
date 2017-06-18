@@ -1,4 +1,4 @@
-package com.zhidisoft.servlet.taxer;
+package com.zhidisoft.servlet.taxPayer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zhidisoft.dao.impl.TaxerDaoImpl;
+import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
 
 /**
  * taxer的新增操作服务器
@@ -19,7 +19,7 @@ import com.zhidisoft.dao.impl.TaxerDaoImpl;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/manage/taxer/add.do")
+@WebServlet("/manage/taxPayer/add.do")
 public class AddTaxerServlet extends HttpServlet {
 
 	@Override
@@ -34,9 +34,9 @@ public class AddTaxerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//获取参数集合
 		Map<String, String[]> params = req.getParameterMap();
-
-		//把参数传入执行数据库操作，并返回执行结果
-		TaxerDaoImpl dao = new TaxerDaoImpl();
+		
+		//把参数集合传入执行数据库操作，并返回执行结果
+		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
 		//判断结果，是否返回数据
 		if (!dao.add(params)) {
 			PrintWriter writer = resp.getWriter();

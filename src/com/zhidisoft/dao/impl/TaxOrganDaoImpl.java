@@ -1,6 +1,7 @@
 package com.zhidisoft.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxOrgan;
@@ -19,16 +20,12 @@ public class TaxOrganDaoImpl extends BaseDao<TaxOrgan> {
 		return super.getById(TaxOrgan.class, "tax_organ", id);
 	}
 
-	@Override
-	public boolean add(TaxOrgan t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean add(Map<String, String[]> params) {
+		return super.add("tax_organ", params);
 	}
 
-	@Override
-	public boolean update(TaxOrgan t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Map<String, String[]> params) {
+		return super.update("tax_organ", params);
 	}
 
 	public boolean delete(Integer id) {

@@ -1,7 +1,7 @@
 package com.zhidisoft.servlet.user;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,39 +12,38 @@ import javax.servlet.http.HttpSession;
 
 import com.zhidisoft.dao.impl.UserDaoImpl;
 import com.zhidisoft.entity.User;
-import com.zhidisoft.util.EncryptUtil;
 
+/**
+ * 获取用户信息servlet
+ * @author 贺天辰
+ *
+ */
 @SuppressWarnings("serial")
-@WebServlet("/modifyPassword")
-public class ModifyPasswordServlet extends HttpServlet{
+@WebServlet("/manage/userMsg")
+public class UserMsgServlet extends HttpServlet{
 
+	/**
+	 * 根据id查询数据，并返回
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//MD5加密密码
-		String oldPassword = EncryptUtil.encryptMD5(req.getParameter("oldPassword"));
-		String newPassword = EncryptUtil.encryptMD5(req.getParameter("newPassword"));
-		
-		//获取session的user
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		PrintWriter writer = resp.getWriter();
-		//验证原密码
-		if (user.getPassword().equals(oldPassword)) {
-			//执行密码修改
-			user.setPassword(newPassword);
-			UserDaoImpl dao = new UserDaoImpl();
-			dao.modifyPwd(user);
-		} else {
-			//密码错误，返回数据
-			writer.println("密码错误");
-		}
-		writer.flush();
-		writer.close();
+		//根据id获取查询数据
+		UserDaoImpl dao = new UserDaoImpl();
+		Map<String, String> map = dao.getMsgById(user.getId());
+		//把数据设置参数
+		req.setAttribute("msg", map);
+		//转发
+		req.getRequestDispatcher("/manage/userMsg.jsp").forward(req, resp);
 	}
 
+	/**
+	 * 更新数据库
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 
 }

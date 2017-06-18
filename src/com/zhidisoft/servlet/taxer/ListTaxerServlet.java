@@ -35,6 +35,9 @@ public class ListTaxerServlet extends HttpServlet{
 		data.put("total", count);
 		data.put("rows", listMap);
 		
+		//把数据总条数设置为会话参数，方便taxerCode的生成
+		req.getSession().setAttribute("taxerSize", count);
+		
 		//把查询数据封装为json数据，将数据传到前端
 		JSONObject object = JSONObject.fromObject(data);
 		PrintWriter writer = resp.getWriter();

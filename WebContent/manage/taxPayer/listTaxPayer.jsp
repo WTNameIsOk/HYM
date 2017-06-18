@@ -86,18 +86,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                width : 750,
 	                height : 600,
 	                title : "修改税务人员信息",
-	                url : "manage/taxer/edit.do?id="+id,
+	                url : "manage/taxPayer/edit.do?id="+id,
 	                
 	            })
 	    	}
 	    	//提交删除请求
 	    	var deleteOperation = function(id){
-	    		$.post("manage/taxer/delete.do",{"id":id},function(result){
+	    		$.post("manage/taxPayer/delete.do",{"id":id},function(result){
 	    			if (result){
 	    				parent.$.messager.alert('提示','删除失败');
 	    			} else {
 	    				$.messager.alert('提示','删除成功','',function(){
-	    					top.frames[3].$('#dg').datagrid('load');
+	    					//top.frames[3].$('#dg').datagrid('load');
+	    					top.$('.easyui-tabs1').tabs('getSelected').find('iframe')[0].contentWindow.$('#dg').datagrid('load');
+	    					//$('.easyui-tabs1').tabs('getSelected').find('iframe').contents()当前窗口jQuery对象
 	    				});
 	    			}
 	    		})
@@ -135,10 +137,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         //为重置按钮添加事件处理函数
 	    	//重置并刷新显示
 			$('#setBtn').click(function(){
-				$('#taxerName').textbox('setValue','');
+				$('#payerCode').textbox('setValue','');
+				$('#payerName').textbox('setValue','');
 	        	$('#dg').datagrid('load',{});//刷新
 	        	//$('#dg').datagrid('reload');
 			})
+	        //定义回车键执行查询
+	  		$(function(){//页面加载之后才能定义
+	  			$("input").keydown(function() {
+		            if (event.keyCode == "13") {//keyCode=13是回车键
+		            	$('#searchBtn').click();
+		            }
+	       		});
+	  		})
         //为添加纳税人添加事件处理函数
        $(function(){
            $("#addBtn").on("click",function(e){

@@ -270,7 +270,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<iframe scrolling="no" src="manage/modifyPassword.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
 	</div>
 	<div id="userMsg" class="easyui-window" title="基本信息" style="width:800px;height:300px" data-options="iconCls:'icon-save',modal:true">
-    	<iframe scrolling="no" src="manage/userMsg.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
+    	<iframe scrolling="no" src="manage/userMsg" frameborder="no"   border="no" height="100%" width="100%" ></iframe>
 	</div>
 </body> 
 </html>

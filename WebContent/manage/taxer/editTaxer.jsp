@@ -52,23 +52,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td class="kv-label">出生日期</td>
-                        <td class="kv-content"><input type="text" name="birthday" placeholder="出生日期" value="${taxer.birthday }"></td>
-                    </tr>
-                    <tr>
-                    	<td class="kv-label">所属税务机关</td>
+                        <td class="kv-content"><input type="text" name="birthday" placeholder="出生日期,格式:1900-01-01" value="${taxer.birthday }"></td>
+                        <td class="kv-label">所属税务机关</td>
                         <td class="kv-content">
-                            <select id="selectOrgan" name="organId">
+                            <select id="selectOrgan" class="easyui-validatebox" data-options="validType:'selected'" name="organId">
                                 <option value="-1" id="selectOrgan">请选择所属税务机关</option>                         
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                     	<td class="kv-label">上级领导</td>
                         <td class="kv-content">
-                            <select id="selectMgr" name="mgr">
+                            <select id="selectMgr" class="easyui-validatebox" data-options="validType:'selected'" name="mgr">
                                 <option value="-1" >请选择上级领导</option>                         
                             </select>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="kv-label">有效标志</td>
                         <td class="kv-content">
                             <select name="state">
@@ -76,6 +74,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <option value="1" ${1 eq taxer.admin ? "selected='selected'" : '' }>有效</option>                         
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td class="kv-label">系统权限</td>
                         <td class="kv-content">
                             <select name="admin">
@@ -83,17 +83,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <option value="1" ${1 eq taxer.admin ? "selected='selected'" : '' }>管理员</option>                         
                             </select>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="kv-label">录入人员</td>
                         <td class="kv-content">
                             <select id="recordUser" name="recordUserId">
                                 <option value="-1" disabled="disabled">请选择办税专员</option>                         
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td class="kv-label">录入日期</td>
                         <td class="kv-content">
-							<input type="date" name="recordDate" placeholder="录入日期" value="${taxer.recordDate }">
+							<input type="text" name="recordDate" placeholder="录入日期,格式:1900-01-01" value="${taxer.recordDate }">
 						</td>
                     </tr>
                     </tbody>
@@ -169,6 +169,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		})
 	
 	})
+	//自定义easyUI表单验证
+	$.extend($.fn.validatebox.defaults.rules,{  
+	  selected : {
+	    	 validator : function(value) {
+			       return value != -1;
+		      	},
+		      	message : "改选项为必选项."
+	     }
+  	});
 </script>
 </html>
 

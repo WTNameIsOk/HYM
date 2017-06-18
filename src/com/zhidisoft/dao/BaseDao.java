@@ -67,19 +67,62 @@ public abstract class BaseDao<T> {
 
 	/**
 	 * 新增数据
-	 * 
-	 * @param t
+	 * @param table - 操作的表名
+	 * @param params - 修改参数的map集合
 	 * @return
 	 */
-	public abstract boolean add(T t);
+	public boolean add(String table, Map<String, String[]> params){
+		StringBuilder sql = new StringBuilder("INSERT INTO tb_"+table+" (");
+		StringBuilder field = new StringBuilder();
+		StringBuilder valLength = new StringBuilder();
+		List<Object> values = new ArrayList<Object>();
+		if (!params.isEmpty()) {
+			for (Iterator<String> it = params.keySet().iterator(); it.hasNext();) {
+				String key = (String) it.next();
+				String val = params.get(key)[0];
+				if (val != null && val.trim().length() > 0 ) {
+					field.append(key + ",");
+					valLength.append("?,");
+					values.add(val);
+				}
+			}
+		}
+		sql.append(field.substring(0, field.length()-1) + ") values (" + valLength.substring(0, valLength.length()-1) + ");");
+		boolean state = DBUtil.update(sql.toString(), values.toArray());
+		return state;
+	}
 
 	/**
 	 * 更新操作
-	 * 
-	 * @param t
+	 * @param table - 操作的表名
+	 * @param params - 修改参数的map集合
 	 * @return
 	 */
-	public abstract boolean update(T t);
+	public boolean update(String table, Map<String, String[]> params){
+		StringBuilder sql = new StringBuilder("UPDATE tb_"+table+" set ");
+		StringBuilder field = new StringBuilder();//字段设置的可变字符串
+		String fields = null;//字段设置的字符串
+		List<Object> values = new ArrayList<Object>();//参数集合
+		
+		String id = params.get("id")[0];//获取id参数
+		if (!params.isEmpty()) {
+			for (Iterator<String> it = params.keySet().iterator(); it.hasNext();) {
+				String key = (String) it.next();
+				if (!"id".equals(key)) {//跳过id的字符串拼接
+					String val = params.get(key)[0];
+					if (val != null && val.trim().length() > 0 ) {
+						field.append(key + "=?,");//拼接字段设置
+						values.add(val);//拼接参数
+					}
+				}
+			}
+			fields = field.substring(0, field.length()-1);
+		}
+		values.add(id);//最后拼接id参数
+		sql.append(fields + " where id = ?");//拼接SQL语句条件
+		boolean state = DBUtil.update(sql.toString(), values.toArray());
+		return state;
+	}
 
 	/**
 	 * 根据ID删除
@@ -112,15 +155,16 @@ public abstract class BaseDao<T> {
 	 * @param tables 查询表(含表连接语句)
 	 * @param pageNumber 当前页码
 	 * @param pageSize 一页显示条数
-	 * @param map 查询条件的map集合
+	 * @param map 精确查询的map集合
+	 * @param map 模糊查询的map集合
 	 * @return map数据的list集合
 	 */
-	public List<Map<String, String>> getResultList(String tables, String page, String rows, Map<String, String> map) {
+	public List<Map<String, String>> getResultList(String tables, String page, String rows, Map<String, String> map, Map<String, String> fuzzyMap) {
 		int pageNumber = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(rows);
 		StringBuilder sql = new StringBuilder();
 		sql.append("select * from "+ tables +" where 1=1");
-		//拼接查询参数
+		//拼接精确查询参数
 		if (!map.isEmpty()) {
 			for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 				//获取map集合的键
@@ -131,6 +175,20 @@ public abstract class BaseDao<T> {
 				//进行sql拼接
 				if (value != null && value.trim().length() > 0 ) {
 					sql.append(" and "+ key +"='"+ value.trim() +"'");
+				}
+			}
+		}
+		//拼接模糊查询参数
+		if (!fuzzyMap.isEmpty()) {
+			for (Iterator<String> it = fuzzyMap.keySet().iterator(); it.hasNext();) {
+				//获取map集合的键
+				String key = it.next();
+				//获取值
+				String value = fuzzyMap.get(key);
+				
+				//进行sql拼接
+				if (value != null && value.trim().length() > 0 ) {
+					sql.append(" and "+ key +" like '%"+ value.trim() +"%'");
 				}
 			}
 		}

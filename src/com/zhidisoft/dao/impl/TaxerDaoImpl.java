@@ -21,18 +21,12 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 		return super.getById(Taxer.class, "taxer", id);
 	}
 
-	@Override
-	public boolean add(Taxer t) {
-		String sql = "INSERT INTO tb_taxer (taxerCode, taxerName, mobile, address, sex, birthday, email, organId, state, mgr, admin, recordDate, recordUserId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE(NOW()), ?);";
-		Object[] args = {t.getTaxerCode(), t.getTaxerName(), t.getMobile(), t.getAddress(), t.getSex(), t.getBirthday(), t.getEmail(), t.getOrganId(), t.getState(), t.getMgr(), t.getAdmin(), t.getRecordUserId()};
-		return DBUtil.update(sql, args);
+	public boolean add(Map<String, String[]> params) {
+		return super.add("taxer", params);
 	}
 
-	@Override
-	public boolean update(Taxer t) {
-		String sql = "UPDATE tb_taxer SET mobile=?,address=?,sex=?, birthday = ? , email = ? , organId = ? , state = ? , mgr = ? , admin = ? , recordUserId = ?  WHERE id = ?";
-		Object[] args = {t.getMobile(),t.getAddress(),t.getSex(), t.getBirthday() , t.getEmail() , t.getOrganId() , t.getState() , t.getMgr(), t.getAdmin(), t.getRecordUserId(), t.getId()};
-		return DBUtil.update(sql, args);
+	public boolean update(Map<String, String[]> params) {
+		return super.update("taxer", params);
 	}
 
 	public boolean delete(Integer id) {
@@ -70,7 +64,7 @@ public class TaxerDaoImpl extends BaseDao<Taxer> {
 				"SELECT tb.*,tto.organName,tu.username,tt.taxerName mgrName FROM tb_taxer tb LEFT JOIN tb_tax_organ tto ON tb.organId=tto.id LEFT JOIN tb_user tu ON tb.recordUserId=tu.id LEFT JOIN tb_taxer tt ON tb.mgr=tt.id WHERE 1=1");
 		if (taxerName != null && taxerName.length() > 0) {
 			// 办税专员名字用模糊查询
-			sb.append(" AND tb.taxerName  LIKE '%" + taxerName + "%'");
+			sb.append(" AND tb.taxerName LIKE '%" + taxerName + "%'");
 		}
 
 		sb.append(" limit ?,?");

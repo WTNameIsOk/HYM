@@ -1,6 +1,7 @@
 package com.zhidisoft.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.Industry;
@@ -19,16 +20,12 @@ public class IndustryDaoImpl extends BaseDao<Industry> {
 		return super.getById(Industry.class, "industry", id);
 	}
 
-	@Override
-	public boolean add(Industry t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean add(Map<String, String[]> params) {
+		return super.add("industry", params);
 	}
 
-	@Override
-	public boolean update(Industry t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Map<String, String[]> params) {
+		return super.update("industry", params);
 	}
 
 	public boolean delete(Integer id) {

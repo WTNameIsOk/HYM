@@ -37,11 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input 
                         	type="text" name="taxerCode" 
                         	placeholder="税务人员工号"
-                        	<%
-                        		String date = Long.toString(new Date().getTime());
-                        		String no = date.substring(date.length()-12, date.length()-1);
-                        	%>
-                        	value="<%=no %>"
+                        	value="<%=new SimpleDateFormat("y").format(new Date()) %>0${taxerSize + 1 }"
                         	readonly="readonly"
                         	title="工号自动生成"
                         />
@@ -69,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                     	<td class="kv-label">出生日期</td>
                         <td class="kv-content"><input type="text" class="easyui-datebox" name="birthday" placeholder="出生日期"></td>
-                    	<td class="kv-label">所属税务机关</td>
+                        <td class="kv-label">所属税务机关</td>
                         <td class="kv-content">
                             <select id="selectOrgan" class="easyui-validatebox" data-options="validType:'selected'" name="organId">
                                 <option value="-1" id="selectOrgan">请选择所属税务机关</option>                         
@@ -77,6 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </td>
                     </tr>
                     <tr>
+                    	
                     	<td class="kv-label">上级领导</td>
                         <td class="kv-content">
                             <select id="selectMgr" class="easyui-validatebox" data-options="validType:'selected'" name="mgr">
@@ -102,8 +99,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td class="kv-label">录入人员</td>
                         <td class="kv-content">
                             <select id="recordUser" name="recordUserId">
-                                <option>请选择办税专员</option>
+                                <option>请选择录入人员</option>
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kv-label">录入日期</td>
+                        <td class="kv-content">
+                            <input type="text" class="easyui-datebox" name="recordDate" placeholder="录入日期" value="<%=new SimpleDateFormat("y-MM-dd").format(new Date())%>">
                         </td>
                     </tr>
                     </tbody>

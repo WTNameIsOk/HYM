@@ -1,6 +1,7 @@
 package com.zhidisoft.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxPayer;
@@ -18,17 +19,13 @@ public class TaxPayerDaoImpl extends BaseDao<TaxPayer> {
 	public TaxPayer getById(Integer id) {
 		return super.getById(TaxPayer.class, "tax_payer", id);
 	}
-
-	@Override
-	public boolean add(TaxPayer t) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public boolean add(Map<String, String[]> params) {
+		return super.add("tax_payer", params);
 	}
 
-	@Override
-	public boolean update(TaxPayer t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Map<String, String[]> params) {
+		return super.update("tax_payer", params);
 	}
 
 	public boolean delete(Integer id) {

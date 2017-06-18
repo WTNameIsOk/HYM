@@ -29,6 +29,27 @@ public class UserDaoImpl extends BaseDao<User> {
 		}
 		return user;
 	}
+	
+	/**
+	 * 修改密码
+	 * @param user
+	 * @return
+	 */
+	public boolean modifyPwd(User user) {
+		String sql = "UPDATE tb_user SET PASSWORD = ? WHERE id = ?";
+		Object[] args = {user.getPassword(),user.getId()};
+		return DBUtil.update(sql, args);
+	}
+	
+	/**
+	 * 根据用户id查询用户信息
+	 * @param id
+	 * @return
+	 */
+	public Map<String, String> getMsgById(Integer id){
+		String sql = "SELECT tu.taxerId,tu.permissionId,tu.`state` status,tt.*,tto.organName,tb.taxerName mgrName FROM tb_user tu LEFT JOIN tb_taxer tt ON tu.taxerId = tt.id LEFT JOIN tb_tax_organ tto ON tt.organId=tto.id LEFT JOIN tb_taxer tb ON tt.mgr=tb.id WHERE tu.id = ? ";
+		return DBUtil.query(sql, id).get(0);
+	}
 
 	/**
 	 * 查询所有用户信息
@@ -42,17 +63,12 @@ public class UserDaoImpl extends BaseDao<User> {
 		return super.getById(User.class, "user", id);
 	}
 
-	@Override
-	public boolean add(User t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean add(Map<String, String[]> params) {
+		return super.add("user", params);
 	}
 
-	@Override
-	public boolean update(User user) {
-		String sql = "UPDATE tb_user SET PASSWORD = ? WHERE id = ?";
-		Object[] args = {user.getPassword(),user.getId()};
-		return DBUtil.update(sql, args);
+	public boolean update(Map<String, String[]> params) {
+		return super.update("user", params);
 	}
 
 	public boolean delete(Integer id) {
