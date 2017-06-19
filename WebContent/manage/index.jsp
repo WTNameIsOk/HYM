@@ -89,9 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <i class="iconfont">&#xe642;</i>
                         </a>
                         <ul class="sider-nav-s">
-                            <li class="active"><a href="javascript:addTab('任务查询','manage/tesk/searchTask.html')">调查任务查询</a></li>
-                            <li><a href="javascript:addTab('调查任务录入','manage/tesk/addTask.html')">调查任务录入</a></li>
-                            <li><a href="javascript:addTab('未调查企业统计','manage/tesk/statistical.html')">未被调查企业统计</a></li>
+                            <li class="active"><a href="javascript:addTab('任务查询','manage/tesk/searchTask.jsp')">调查任务查询</a></li>
+                            <li><a href="javascript:addTab('调查任务录入','manage/tesk/addTask.jsp')">调查任务录入</a></li>
+                            <li><a href="javascript:addTab('未调查企业统计','manage/tesk/statistical.jsp')">未被调查企业统计</a></li>
                         </ul>
                      </li>
                      <li>

@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
 
 /**
- * taxer的新增操作服务器
+ * taxPayer的新增操作服务器
  * 
  * @author Administrator
  *
  */
 @SuppressWarnings("serial")
 @WebServlet("/manage/taxPayer/add.do")
-public class AddTaxerServlet extends HttpServlet {
+public class AddTaxPayerServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
-import com.zhidisoft.dao.impl.TaxerDaoImpl;
 
 /**
- * taxer的删除操作服务器
+ * taxPayer的删除操作服务器
  * 
  * @author Administrator
  *
  */
 @SuppressWarnings("serial")
 @WebServlet("/manage/taxPayer/delete.do")
-public class DeleteTaxerServlet extends HttpServlet {
+public class DeleteTaxPayerServlet extends HttpServlet {
 
 	/**
 	 * 删除操作

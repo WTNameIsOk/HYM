@@ -1,9 +1,12 @@
 package com.zhidisoft.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.zhidisoft.util.BeanUtil;
 import com.zhidisoft.util.DBUtil;
@@ -60,7 +63,11 @@ public abstract class BaseDao<T> {
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
-			BeanUtil.mapToBean(t, mapList.get(0));
+			try {
+				BeanUtils.populate(t, mapList.get(0));
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
 		}
 		return t;
 	}

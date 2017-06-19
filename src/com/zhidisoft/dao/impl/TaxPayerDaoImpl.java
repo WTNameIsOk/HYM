@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxPayer;
+import com.zhidisoft.util.DBUtil;
 
 public class TaxPayerDaoImpl extends BaseDao<TaxPayer> {
 
@@ -30,6 +31,20 @@ public class TaxPayerDaoImpl extends BaseDao<TaxPayer> {
 
 	public boolean delete(Integer id) {
 		return super.delete("tax_payer", id);
+	}
+
+	/**
+	 * 存在子记录的条数
+	 * @return
+	 */
+	public Integer isBusy(Integer id) {
+		String sql = "SELECT * FROM tb_tax_payer ttp LEFT JOIN tb_tax_source tts ON ttp.id=tts.payerId WHERE ttp.id=?";
+		List<Map<String, String>> list = DBUtil.query(sql, id);
+		Integer count = 0;
+		if (list != null && !list.isEmpty()) {
+			count = list.size();
+		}
+		return count;
 	}
 
 }

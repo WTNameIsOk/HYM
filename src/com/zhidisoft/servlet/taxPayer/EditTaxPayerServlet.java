@@ -1,4 +1,4 @@
-package com.zhidisoft.servlet.taxer;
+package com.zhidisoft.servlet.taxPayer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zhidisoft.dao.impl.TaxerDaoImpl;
-import com.zhidisoft.entity.Taxer;
+import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
+import com.zhidisoft.entity.TaxPayer;
 
 /**
  * 更新数据servlet
@@ -19,23 +19,34 @@ import com.zhidisoft.entity.Taxer;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/manage/taxer/edit.do")
-public class EditTaxerServlet extends HttpServlet{
+@WebServlet("/manage/taxPayer/edit.do")
+public class EditTaxPayerServlet extends HttpServlet{
 
 	/**
-	 * 根据id查询数据，并返回
+	 * 根据id查询子记录数据条数，并返回
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//获取id参数
 		Integer id = Integer.parseInt(req.getParameter("id"));
 		//根据id获取查询数据
-		TaxerDaoImpl dao = new TaxerDaoImpl();
-		Taxer taxer = dao.getById(id);
+		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
+		TaxPayer payer = dao.getById(id);
+		
 		//把数据设置参数
-		req.setAttribute("taxer", taxer);
-		//转发
-		req.getRequestDispatcher("/manage/taxer/editTaxer.jsp").forward(req, resp);
+		req.setAttribute("payer", payer);
+		
+		if ("task".equalsIgnoreCase(req.getParameter("target"))){
+			/*PrintWriter writer = resp.getWriter();
+			writer.print(payer);
+			writer.flush();
+			writer.close();*/
+			//转发
+			req.getRequestDispatcher("/manage/tesk/addTask.jsp?"+Math.random()).forward(req, resp);
+		} else {
+			//转发
+			req.getRequestDispatcher("/manage/taxPayer/editTaxpayer.jsp").forward(req, resp);
+		}
 	}
 
 	/**
@@ -45,9 +56,9 @@ public class EditTaxerServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//获取参数集合，封装为实体类
 		Map<String, String[]> params = req.getParameterMap();
-
+		
 		//把实体类传入执行数据库操作，并返回执行结果
-		TaxerDaoImpl dao = new TaxerDaoImpl();
+		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
 		//判断结果，是否返回数据
 		if (!dao.update(params)) {
 			PrintWriter writer = resp.getWriter();

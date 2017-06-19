@@ -57,10 +57,10 @@ public class TaxPayer {
 	public void setBizAddress(String bizAddress) {
 		this.bizAddress = bizAddress;
 	}
-	public Integer getTaxOrganid() {
+	public Integer getTaxOrganId() {
 		return taxOrganId;
 	}
-	public void setTaxOrganid(Integer taxOrganId) {
+	public void setTaxOrganId(Integer taxOrganId) {
 		this.taxOrganId = taxOrganId;
 	}
 	public Integer getIndustryId() {

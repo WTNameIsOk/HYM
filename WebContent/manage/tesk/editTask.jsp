@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<!DOCTYPE html> 
+<html lang="en"> 
 <head>
-    <base href="/TaxSource/">
+    <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>任务录入</title>
-    <link rel="stylesheet" type="text/css" href="static/css/base.css" >
-    <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/easyui.css">
+    <link href="static/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/easyui/uimaker/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/icon.css">
-    <link rel="stylesheet" type="text/css" href="static/css/edit.css">
+    <link href="static/css/edit.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">

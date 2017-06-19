@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<!DOCTYPE html> 
+<html lang="en"> 
 <head>
-    <base href="/TaxSource/">
+    <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>任务录入</title>
-    <link href="static/css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/easyui/uimaker/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/css/base.css" >
+    <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/icon.css">
-    <link href="static/css/edit.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/edit.css">
 </head>
 <body>
 <div class="container">
@@ -19,12 +25,12 @@
                 <tbody>
                 <tr>
                     <td class="kv-label">纳税人识别号</td>
-                    <td class="kv-content"><input type="text" name="payerCode" value="1001200102"
+                    <td class="kv-content"><input type="text" name="payerCode" value="${payer.payerCode }"
                                                   placeholder="请输入纳税人识别号，获取纳税人信息"></td>
                     <td class="kv-label">纳税人名称</td>
-                    <td class="kv-content">北京智递科技有限公司</td>
+                    <td class="kv-content">${payer.payerName }</td>
                     <td class="kv-label">生产经营地址</td>
-                    <td class="kv-content">北京市朝阳区</td>
+                    <td class="kv-content">${payer.bizAddress }</td>
                 </tr>
                 <tr>
                     <td class="kv-label">所属税务机关</td>
@@ -190,4 +196,19 @@
         formatter: easyUIFormater,
         parser: easyUIparser
     });
+    //查询纳税人方法
+	var searchPayer = function(id){
+		$.get("manage/taxPayer/edit.do?target=task&id="+id,{},function(result){
+			//访问错误处理
+			if (!result) {
+				top.$.messager.alert('错误','error','未知错误',function(){
+					top.location.href="manage/index.jsp"
+				});
+			}
+		})
+	}
+    $(function(){
+		
+            //location.reload()
+    })
 </script>

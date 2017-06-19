@@ -109,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		parent.$.messager.confirm('提示','确认删除？',function(r){
 	    		    if (r){
 	    		    	//当前数据是否有其他数据连接
-	    		    	$.get("manage/taxer/delete.do",{"id":id},function(result){
+	    		    	$.get("manage/taxPayer/delete.do",{"id":id},function(result){
 			    			if (result > 0){
 			    				parent.$.messager.confirm('警告','当前数据被占用，删除该数据则会导致其他数据(共'+result+'条)一并删除。<hr/>请确认是否执行删除操作？',function(re){
 			    					if (re) {
@@ -123,8 +123,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			}
 	   		    })
 	    	}
+	    	//新增任务
+	    	var addTesk = function(id){
+	    		top.addTab('调查任务录入','manage/taxPayer/edit.do?target=task&id='+id)
+	    	}
     </script>
     <script type="text/javascript">
+		$(function(){//页面加载之后才能定义
         //为搜索按钮添加事件处理函数
         $('#searchBtn').click(function(){
         	var payerCode = $('#payerCode').val();
@@ -142,14 +147,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	$('#dg').datagrid('load',{});//刷新
 	        	//$('#dg').datagrid('reload');
 			})
-	        //定义回车键执行查询
-	  		$(function(){//页面加载之后才能定义
-	  			$("input").keydown(function() {
-		            if (event.keyCode == "13") {//keyCode=13是回车键
-		            	$('#searchBtn').click();
-		            }
-	       		});
-	  		})
+        //定义回车键执行查询
+  			$("input").keydown(function() {
+	            if (event.keyCode == "13") {//keyCode=13是回车键
+	            	$('#searchBtn').click();
+	            }
+       		});
+  		})
         //为添加纳税人添加事件处理函数
        $(function(){
            $("#addBtn").on("click",function(e){
@@ -160,6 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   url : "manage/taxPayer/addTaxpayer.jsp"
               });
            });
+       });
 
            /**
             *打开在父窗口中打开window
@@ -181,8 +186,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    collapsible:false
                });
            }
-
-       });
     </script>
 </body> 
 </html>
