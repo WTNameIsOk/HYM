@@ -37,7 +37,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input 
                         	type="text" name="taxerCode" 
                         	placeholder="税务人员工号"
-                        	value="<%=new SimpleDateFormat("y").format(new Date()) %>0${taxerSize + 1 }"
+                        	<%String Code = Long.toString(new Date().getTime(), 16); %>
+                        	value="<%=Code%>"
                         	readonly="readonly"
                         	title="工号自动生成"
                         />
@@ -153,7 +154,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						parent.$.messager.alert('提示','添加失败');
 					} else {
 						parent.$.messager.alert('提示','添加成功','info',function(){
-							top.frames[3].$('#dg').datagrid('load',{});//刷新数据
+							//刷新数据
+							top.$('.easyui-tabs1').tabs('getSelected').find('iframe')[0].contentWindow.$('#dg').datagrid('load');
 						});
 	    				parent.$("#topWindow").window('close');
 					}

@@ -38,7 +38,7 @@ public class ListTaxPayerServlet extends HttpServlet{
 		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
 		String tables = "tb_tax_payer ttp LEFT JOIN tb_tax_organ tto ON ttp.taxOrganId=tto.id LEFT JOIN tb_industry ti ON ttp.industryId=ti.id";
 		List<Map<String, String>> listMap = dao.getResultList(tables, page, rows, map, fuzzySearch);
-		int count = dao.getCount("tax_payer");
+		int count = dao.getCount("tb_tax_payer");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("total", count);
 		data.put("rows", listMap);

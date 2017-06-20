@@ -261,10 +261,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       }
     })
 
-    // setTimeout(function(){
-    //    $('.tabs-panels').height($("#pf-page").height()-46);
-    //    $('.panel-body').height($("#pf-page").height()-76)
-    // }, 200)
+    $('.easyui-tabs1').tabs({
+    	onSelect : function(title,index){
+    		if (title == '调查任务录入') {
+	    		$.messager.alert('注意','离开'+title+'页面,页面将会被关闭，您输入的信息将不被保存。','warning',function(r){
+	    			if (r){
+	    		    	$('.easyui-tabs1').tabs('close','调查任务录入');
+	    			}
+	    		});
+    		}
+    	},
+    	onUnselect : function(title,index){
+    		if (title == '调查任务录入') {
+   		    	$('.easyui-tabs1').tabs('close','调查任务录入');
+    		}
+    	},
+    	onClose : function(title,index){
+    		$.messager.show({
+    			title:'提示',
+    			msg:'<h4>'+title+'页面已关闭</h4>',
+    			height:150
+    		});
+    	}
+    })
+    
+	    // setTimeout(function(){
+	    //    $('.tabs-panels').height($("#pf-page").height()-46);
+	    //    $('.panel-body').height($("#pf-page").height()-76)
+	    // }, 200)
     </script>
     <div id="mdfPwd" class="easyui-window" title="密码修改" style="width:600px;height:400px" data-options="iconCls:'icon-save',modal:true">
 		<iframe scrolling="no" src="manage/modifyPassword.jsp" frameborder="no"   border="no" height="100%" width="100%" ></iframe>

@@ -30,8 +30,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <table class="kv-table">
                     <tbody>
                     <tr>
+                        <td class="kv-label">工号
                     	<input type="hidden" name="id" value="${taxer.id }"/>
-                        <td class="kv-label">工号</td>
+                        </td>
                         <td class="kv-content"><input type="text" name="taxerCode" placeholder="税务人员工号" readonly="readonly" value="${taxer.taxerCode }"></td>
                         <td class="kv-label">姓名</td>
                         <td class="kv-content"><input type="text" name="taxerName" placeholder="税务人员名称" readonly="readonly" value="${taxer.taxerName }"></td>
@@ -143,7 +144,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						parent.$.messager.alert('提示','修改失败');
 					} else {
 						parent.$.messager.alert('提示','修改成功','info',function(){
-							top.frames[3].$('#dg').datagrid('load',{});//刷新数据
+							//刷新数据
+							top.$('.easyui-tabs1').tabs('getSelected').find('iframe')[0].contentWindow.$('#dg').datagrid('load');
 						});
 	    				parent.$("#topWindow").window('close');
 					}

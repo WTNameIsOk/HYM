@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						formatter: function(value,row,index){
 							return "<a href='javascript:' onclick='edit("+row.id+")'>修改</a>"+
 							"|<a href='javascript:' onclick='deleteTesk("+row.id+")'>删除</a>"+
-							"|<a href='javascript:' onclick='addTesk("+row.id+")'>新增任务</a>";
+							"|<a href='javascript:' onclick='addTesk("+row.payerCode+")'>新增任务</a>";
 						}
 					}
 		        ]]
@@ -125,7 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	}
 	    	//新增任务
 	    	var addTesk = function(id){
-	    		top.addTab('调查任务录入','manage/taxPayer/edit.do?target=task&id='+id)
+	    		top.addTab('调查任务录入','manage/task/add.do?payerCode='+id)
 	    	}
     </script>
     <script type="text/javascript">

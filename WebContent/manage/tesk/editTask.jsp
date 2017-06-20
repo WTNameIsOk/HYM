@@ -73,18 +73,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td class="kv-label">任务名称</td>
                     <td class="kv-content"><input type="text" name="taskName" placeholder="请输入任务名称"></td>
                     <td class="kv-label">下达部门</td>
-                    <td class="kv-content"><input type="text" name="publishOrgan" placeholder="请输入下达部门"></td>
+                    <td class="kv-content"><input type="text" name="taxOrganId" placeholder="请输入下达部门"></td>
                     <td class="kv-label">批准人</td>
-                    <td class="kv-content"><input type="text" name="approver" placeholder="请输入批准人"></td>
+                    <td class="kv-content"><input type="text" name="approverId" placeholder="请输入批准人"></td>
                 </tr>
                 <tr>
                     <td class="kv-label">执行人</td>
-                    <td class="kv-content"><input type="text" name="executer" placeholder="请输入执行人"></td>
+                    <td class="kv-content"><input type="text" name="executeId" placeholder="请输入执行人"></td>
                     <td class="kv-label">执行时间</td>
                     <td class="kv-content"><input type="text" name="executeTime"></td>
                     <td class="kv-label">风险登记</td>
                     <td class="kv-content">
-                        <select>
+                        <select name="riskLevel">
                             <option>请选择</option>
                             <option>高</option>
                             <option>中</option>
@@ -95,85 +95,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tr>
                     <td class="kv-label">任务执行情况</td>
                     <td class="kv-content">
-                        <textarea rows="3" style="width: 90%;"></textarea>
+                        <textarea name="taskState" rows="3" style="width: 90%;"></textarea>
                     </td>
                     <td class="kv-label">调查结论和意见</td>
                     <td class="kv-content" colspan="3">
-                        <textarea rows="3" style="width: 90%;"></textarea>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="column">
-                <span class="current">图片信息</span>
-            </div>
-            <table class="kv-table">
-                <tbody>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="column">
-                <span class="current">视频信息</span>
-            </div>
-            <table class="kv-table">
-                <tbody>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
+                        <textarea name="idea" rows="3" style="width: 90%;"></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -187,7 +113,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 </body>
-</html>
 <script type="text/javascript" src="static/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="static/js/calendar.js"></script>
@@ -196,4 +121,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         formatter: easyUIFormater,
         parser: easyUIparser
     });
+    
 </script>
+</html>

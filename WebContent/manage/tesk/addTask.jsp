@@ -15,13 +15,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/uimaker/icon.css">
     <link rel="stylesheet" type="text/css" href="static/css/edit.css">
+<script type="text/javascript" src="static/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="content">
         <div title="纳税人信息" data-options="closable:false" class="basic-info">
             <div class="column"><span class="current">纳税人基本信息</span></div>
-            <table class="kv-table">
+            <table id="payer" class="kv-table">
                 <tbody>
                 <tr>
                     <td class="kv-label">纳税人识别号</td>
@@ -34,35 +36,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
                 <tr>
                     <td class="kv-label">所属税务机关</td>
-                    <td class="kv-content">北京市朝阳区国税局</td>
+                    <td class="kv-content">${payer.organName }</td>
                     <td class="kv-label">行业</td>
-                    <td class="kv-content">信息技术</td>
+                    <td class="kv-content">${payer.industryName }</td>
                     <td class="kv-label">经营范围</td>
-                    <td class="kv-content">软件开发、计算机系统集成</td>
+                    <td class="kv-content">${payer.bizScope }</td>
                 </tr>
                 <tr>
                     <td class="kv-label">票种核定</td>
-                    <td class="kv-content">增值税发票</td>
+                    <td class="kv-content">${payer.invoiceType }</td>
                     <td class="kv-label">法人代表人</td>
-                    <td class="kv-content">张晓明</td>
+                    <td class="kv-content">${payer.legalPerson }</td>
                     <td class="kv-label">法人身份证号</td>
-                    <td class="kv-content">412331199012010111</td>
+                    <td class="kv-content">${payer.legalIdCard }</td>
                 </tr>
                 <tr>
                     <td class="kv-label">主管财务</td>
-                    <td class="kv-content">樊明明</td>
+                    <td class="kv-content">${payer.finaceName }</td>
                     <td class="kv-label">财务身份证号</td>
-                    <td class="kv-content">412331199012010111</td>
+                    <td class="kv-content">${payer.finaceIdCard }</td>
                     <td class="kv-label">税收管理员</td>
-                    <td class="kv-content">田壮壮</td>
+                    <td class="kv-content">${payer.taxerName }</td>
                 </tr>
                 <tr>
                     <td class="kv-label">办税人员</td>
-                    <td class="kv-content">李晓峰</td>
+                    <td class="kv-content">${payer.taxerName }</td>
                     <td class="kv-label">录入日期</td>
-                    <td class="kv-content">2011-12-20 08:09:12</td>
-                    <td class="kv-label">录入人</td>
-                    <td class="kv-content">张晓梅</td>
+                    <td class="kv-content">${payer.recordDate }</td>
+                    <td class="kv-label">录入人员</td>
+                    <td class="kv-content">${payer.username }
+                <script type="text/javascript">
+	        		$('input[name="payerCode"]').blur(function(){
+	        			searchPayer($(this).val());
+	        		})
+	            	//定义回车键执行
+	          		$("input").keydown(function() {
+	                    if (event.keyCode == "13") {//keyCode=13是回车键
+	                    	searchPayer($(this).val());
+	                    }
+	               	});
+                </script>
+                </td>
                 </tr>
                 </tbody>
             </table>
@@ -73,107 +87,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td class="kv-label">任务名称</td>
                     <td class="kv-content"><input type="text" name="taskName" placeholder="请输入任务名称"></td>
                     <td class="kv-label">下达部门</td>
-                    <td class="kv-content"><input type="text" name="publishOrgan" placeholder="请输入下达部门"></td>
+                    <td class="kv-content">
+	                    <select id="selectOrgan" name="taxOrganId" >
+	                    	<option value="-1">请选择下达部门</option>
+	                    </select>
+                    </td>
                     <td class="kv-label">批准人</td>
-                    <td class="kv-content"><input type="text" name="approver" placeholder="请输入批准人"></td>
+                    <td class="kv-content">
+                    	<select class="taxerId" name="approverId">
+	                    	<option value="-1">请选择批准人</option>
+	                    </select>
+	                </td>
                 </tr>
                 <tr>
                     <td class="kv-label">执行人</td>
-                    <td class="kv-content"><input type="text" name="executer" placeholder="请输入执行人"></td>
+                    <td class="kv-content">
+                    	<select class="taxerId" name="executeId">
+	                    	<option value="-1">请选择执行人</option>
+	                    </select>
+                    </td>
                     <td class="kv-label">执行时间</td>
                     <td class="kv-content"><input type="text" name="executeTime"></td>
                     <td class="kv-label">风险登记</td>
                     <td class="kv-content">
-                        <select>
+                        <select name="riskLevel">
                             <option>请选择</option>
-                            <option>高</option>
-                            <option>中</option>
-                            <option>低</option>
+                            <option value="2">高</option>
+                            <option value="1">中</option>
+                            <option value="0">低</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="kv-label">任务执行情况</td>
                     <td class="kv-content">
-                        <textarea rows="3" style="width: 90%;"></textarea>
+                        <textarea name="taskState" rows="3" style="width: 90%;"></textarea>
                     </td>
                     <td class="kv-label">调查结论和意见</td>
                     <td class="kv-content" colspan="3">
-                        <textarea rows="3" style="width: 90%;"></textarea>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="column">
-                <span class="current">图片信息</span>
-            </div>
-            <table class="kv-table">
-                <tbody>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">图片信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="images">
-                    </td>
-                    <td class="kv-label">图片说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入图片描述信息">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="column">
-                <span class="current">视频信息</span>
-            </div>
-            <table class="kv-table">
-                <tbody>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="kv-label">视频信息</td>
-                    <td class="kv-content">
-                        <input type="file" name="vedio">
-                    </td>
-                    <td class="kv-label">视频说明</td>
-                    <td class="kv-content" colspan="3">
-                        <input type="text" name="imageNote" style="width:80%" placeholder="请输入视频描述信息">
+                        <textarea name="idea" rows="3" style="width: 90%;"></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -187,28 +139,129 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 </body>
-</html>
-<script type="text/javascript" src="static/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="static/js/calendar.js"></script>
 <script type="text/javascript">
     $("input[name=executeTime]").datebox({
         formatter: easyUIFormater,
         parser: easyUIparser
     });
+    $(function(){
+		//ajax获取外键
+		//请求税务单位的数据
+		$.get("getOrgans.do",{},function(data){
+			var organ = $("#selectOrgan")
+			$.each(data,function(index, val){
+				organ.append("<option value='"+val.id+"'>"+val.organName+"</option>")
+			})
+		},"json")
+		//请求税务员的数据
+		$.get("getTaxers.do",{},function(data){
+			var taxer = $(".taxerId")
+			$.each(data,function(index, val){
+				taxer.append("<option value='"+val.taxerName+"'>"+val.taxerName+"</option>");
+			})
+		},"json")
+    })
+		
+    
+		//ajax提交数据
+		var execute = function() {
+			if ($('form').form("validate")) {
+				$.post("manage/task/add.do",$("form").serialize(),function(result){
+					if (result) {
+						parent.$.messager.alert('提示','添加失败');
+					} else {
+						parent.$.messager.alert('提示','添加成功','info',function(){});
+	    				parent.$("#topWindow").window('close');
+					}
+				})
+			}
+		}
+
+    	//定义回车键执行
+  		$("input").keydown(function() {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+            	execute();
+            }
+       	});
+
+    	//定义保存按钮执行
+  		$('a:contains(保存)').click(function(){
+    		execute();
+    	})
+    	
+    
+    
+    
+    
+    
+    
+    
     //查询纳税人方法
 	var searchPayer = function(id){
-		$.get("manage/taxPayer/edit.do?target=task&id="+id,{},function(result){
-			//访问错误处理
+		$.get("manage/task/add.do",{"payerCode":id,"method":"ajax"},function(result){
 			if (!result) {
 				top.$.messager.alert('错误','error','未知错误',function(){
 					top.location.href="manage/index.jsp"
 				});
+			} else {
+				$('#payer').html('')
+				var str = '<tbody>';
+				str+='<tr>'
+				str+='<td class="kv-label">纳税人识别号</td>'
+				str+='<td class="kv-content"><input type="text" name="payerCode" value="'+result.payerCode+'"'
+				str+='placeholder="请输入纳税人识别号，获取纳税人信息"></td>'
+                   str+='    <td class="kv-label">纳税人名称</td>'
+                   str+='    <td class="kv-content">'+result.payerName+'</td>'
+                   str+='    <td class="kv-label">生产经营地址</td>'
+                   str+='    <td class="kv-content">'+result.bizAddress+'</td>'
+                   str+='</tr>'
+              	  	str+='<tr>'
+          		  	str+='    <td class="kv-label">所属税务机关</td>'
+          		  	str+='    <td class="kv-content">'+result.organName+'</td>'
+          		  	str+='     <td class="kv-label">行业</td>'
+          		  	str+='     <td class="kv-content">'+result.industryName+'</td>'
+          		  	str+='     <td class="kv-label">经营范围</td>'
+          		  	str+='     <td class="kv-content">'+result.bizScope+'</td>'
+          		  	str+='</tr>'
+      			  	str+='<tr>'
+  				  	str+='    <td class="kv-label">票种核定</td>'
+  				  	str+='    <td class="kv-content">'+result.invoiceType+'</td>'
+  				  	str+='    <td class="kv-label">法人代表人</td>'
+  				  	str+='    <td class="kv-content">'+result.legalPerson+'</td>'
+  				  	str+='    <td class="kv-label">法人身份证号</td>'
+  				  	str+='    <td class="kv-content">'+result.legalIdCard+'</td>'
+  				  	str+='</tr>'
+   				str+='<tr>'
+				str+='    <td class="kv-label">主管财务</td>'
+				str+='   <td class="kv-content">'+result.finaceName+'</td>'
+				str+='    <td class="kv-label">财务身份证号</td>'
+				str+='    <td class="kv-content">'+result.finaceIdCard+'</td>'
+				str+='    <td class="kv-label">税收管理员</td>'
+				str+='    <td class="kv-content">'+result.taxerName+'</td>'
+				str+='</tr>'
+	            str+='<tr>'
+	            str+='    <td class="kv-label">办税人员</td>'
+	            str+='    <td class="kv-content">'+result.taxerName+'</td>'
+	            str+='    <td class="kv-label">录入日期</td>'
+	            str+='    <td class="kv-content">'+result.recordDate+'</td>'
+	            str+='    <td class="kv-label">录入人员</td>'
+	            str+='    <td class="kv-content">'+result.username+'</td>'
+	            str+='<script type="text/javascript">'
+            	str+='$("input[name=payerCode]").blur(function(){'
+            	str+='searchPayer($(this).val());'
+	            str+='})'
+          		str+='$("input").keydown(function() {'
+          		str+='if (event.keyCode == "13") {//keyCode=13是回车键'
+          		str+='   	searchPayer($(this).val());'
+          		str+='}'
+          		str+='});'
+          		str+="<"+"/script>"
+	            str+='</tr>'
+    			str+='</tbody>'
+    			$('#payer').html(str)
 			}
-		})
+		}, "json")
 	}
-    $(function(){
-		
-            //location.reload()
-    })
 </script>
+</html>

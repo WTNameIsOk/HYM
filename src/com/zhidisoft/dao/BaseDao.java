@@ -149,7 +149,7 @@ public abstract class BaseDao<T> {
 	 * @return
 	 */
 	public int getCount(String table) {
-		List<Map<String, String>> list = DBUtil.query("select count(1) c from tb_"+table);
+		List<Map<String, String>> list = DBUtil.query("select count(1) c from "+table);
 		int count = 0;
 		if (list != null && list.size() == 1) {
 			count = Integer.parseInt(list.get(0).get("c"));

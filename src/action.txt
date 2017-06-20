@@ -24,7 +24,7 @@ taxer
 			});
 			
 			top.$('.easyui-tabs1').tabs('getSelected').find('iframe')[0].contentWindow.$('#dg').datagrid('load');
-	
+	top.$('.easyui-tabs1').tabs('getSelected').panel('refresh','manage/taxPayer/edit.do?${}')
 	局部颜色 #4f5c65		头部颜色 #1da028
 	
 =======================================================================

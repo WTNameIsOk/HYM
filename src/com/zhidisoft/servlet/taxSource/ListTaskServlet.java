@@ -27,8 +27,7 @@ public class ListTaskServlet extends HttpServlet{
 		
 		//获取后端数据库中查询数据
 		TaxSourceDaoImpl dao = new TaxSourceDaoImpl();
-		String tables = "tb_tax_source tts LEFT JOIN tb_tax_payer ttp ON tts.payerId = ttp.id LEFT JOIN tb_industry ti ON ttp.`industryId`=ti.`id`";
-		List<Map<String, String>> listMap = dao.getResultList(tables, params);
+		List<Map<String, String>> listMap = dao.getResultList(params);
 		int count = dao.getCount("tax_source");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("total", count);

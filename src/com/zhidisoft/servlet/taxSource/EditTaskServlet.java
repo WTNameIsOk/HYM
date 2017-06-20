@@ -1,4 +1,4 @@
-package com.zhidisoft.servlet.taxPayer;
+package com.zhidisoft.servlet.taxSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
-import com.zhidisoft.entity.TaxPayer;
+import com.zhidisoft.dao.impl.TaxSourceDaoImpl;
+import com.zhidisoft.entity.TaxSource;
 
 /**
  * 更新数据servlet
@@ -19,8 +20,8 @@ import com.zhidisoft.entity.TaxPayer;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/manage/taxPayer/edit.do")
-public class EditTaxPayerServlet extends HttpServlet{
+@WebServlet("/manage/task/edit.do")
+public class EditTaskServlet extends HttpServlet{
 
 	/**
 	 * 根据id查询子记录数据条数，并返回
@@ -30,14 +31,16 @@ public class EditTaxPayerServlet extends HttpServlet{
 		//获取id参数
 		Integer id = Integer.parseInt(req.getParameter("id"));
 		//根据id获取查询数据
-		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
-		TaxPayer payer = dao.getById(id);
+		TaxSourceDaoImpl dao = new TaxSourceDaoImpl();
+		TaxSource payer = dao.getById(id);
 		
 		//把数据设置参数
 		req.setAttribute("payer", payer);
-	
-		//转发
-		req.getRequestDispatcher("/manage/taxPayer/editTaxpayer.jsp").forward(req, resp);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(payer);
+		writer.flush();
+		writer.close();
 	}
 
 	/**

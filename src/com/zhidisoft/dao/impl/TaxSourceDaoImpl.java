@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.zhidisoft.dao.BaseDao;
 import com.zhidisoft.entity.TaxSource;
@@ -35,30 +36,40 @@ public class TaxSourceDaoImpl extends BaseDao<TaxSource> {
 		return super.delete("tax_source", id);
 	}
 
-	public List<Map<String, String>> getResultList(String tables, Map<String, String[]> params) {
-		//定义精确查询参数
+	public List<Map<String, String>> getResultList(Map<String, String[]> params) {
+		//初始化SQL语句
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM ( SELECT tts.*,ttp.`bizAddress`,ttp.`payerName`,ttp.`payerCode`,ttp.`bizScope`,ti.`id` industry,ti.industryName,DATEDIFF(NOW(), tts.`recordDate`) overDays, tto.`organName` FROM tb_tax_source tts LEFT JOIN tb_tax_payer ttp ON tts.payerId = ttp.id LEFT JOIN tb_industry ti ON ttp.`industryId`=ti.`id` LEFT JOIN tb_tax_organ tto ON tts.`taxOrganId`=tto.`id` )a  where 1=1");
+		//初始化精确查询参数
 		HashMap<String, String> map = new HashMap<String, String>();
-		//定义模糊查询参数
+		//初始化模糊查询参数
 		HashMap<String, String> fuzzyMap = new HashMap<String, String>();
+		//初始化日期查询参数
+		HashMap<String, String> dateMap = new HashMap<String, String>();
 		
-		String[] payerName = params.get("payerName");
-		if (payerName!=null) {
-			fuzzyMap.put("payerName", payerName[0]);
-		}
-		for (Iterator<String> it = params.keySet().iterator(); it.hasNext();) {
-			String name = (String) it.next();
-			if ((!"page".equals(name))&&(!"rows".equals(name))&&(!"payerName".equals(name))) {
-				map.put(name, params.get(name)[0]);
-			}
-		}
-		
+		Set<String> keySet = params.keySet();
 		//获取分页查询参数
 		int pageNumber = Integer.parseInt(params.get("page")[0]);
 		int pageSize = Integer.parseInt(params.get("rows")[0]);
+		keySet.remove("rows");
+		keySet.remove("page");
+		if (keySet != null && !keySet.isEmpty()){
+			//循环遍历获取查询参数
+			for (Iterator<String> it = keySet.iterator(); it.hasNext();) {
+				String name = (String) it.next();
+				String value = params.get(name)[0];
+				if (value != null) {
+					if ("payerName".equals(name)){
+						fuzzyMap.put(name, value);//模糊查询
+					} else if ("startTime".equals(name)|"endTime".equals(name)){
+						dateMap.put(name, value);//日期查询
+					} else {
+						map.put(name, value);//精确查询
+					}
+				}
+			}
+		}
 		
-		//定义SQL语句
-		StringBuilder sql = new StringBuilder();
-		sql.append("select tts.*,ttp.`bizAddress`,ttp.`payerName`,ttp.`payerCode`,ttp.`bizScope`,ti.industryName,DATEDIFF(NOW(),tts.`recordDate`) overDays from "+ tables +" where 1=1");
 		//拼接精确查询参数
 		if (!map.isEmpty()) {
 			for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
@@ -85,6 +96,19 @@ public class TaxSourceDaoImpl extends BaseDao<TaxSource> {
 				if (value != null && value.trim().length() > 0 ) {
 					sql.append(" and "+ key +" like '%"+ value.trim() +"%'");
 				}
+			}
+		}
+		//拼接日期查询参数
+		if (!dateMap.isEmpty()) {
+			String startTime = dateMap.get("startTime");
+			//进行sql拼接
+			if (startTime != null && startTime.trim().length() > 0 ) {
+				sql.append(" and '"+ startTime.trim() +"'< recordDate");
+			}
+			String endTime = dateMap.get("endTime");
+			//进行sql拼接
+			if (endTime != null && endTime.trim().length() > 0 ) {
+				sql.append(" and '"+ endTime.trim() +"'> recordDate");
 			}
 		}
 		//最后拼接limit子句

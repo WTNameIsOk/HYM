@@ -30,10 +30,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <a href="javascript:void(0);" class="easyui-linkbutton more" iconCls="icon-more">更多</a>
 	        </div>
 	        <div class="conditions hide">
-	            <span class="con-span">税务机关: </span><select id="organ" name="organ" class="easyui-combobox" style="width:166px;height:35px;line-height:35px;"><option>请选择税务机关</option></select>
+	            <span class="con-span">税务机关: </span><select id="organ" name="organ" class="easyui-combobox" style="width:166px;height:35px;line-height:35px;"></select>
 	            <span class="con-span">任务开始时间: </span><input class="easyui-datebox" type="text" name="startTime" style="width:166px;height:35px;line-height:35px;">
 	            <span class="con-span">任务结束时间: </span><input class="easyui-datebox" type="text" name="endTime" style="width:166px;height:35px;line-height:35px;">
-	            <span class="con-span">行业: </span><select id="industry" name="industry" class="easyui-combobox" style="width:166px;height:35px;line-height:35px;"><option>请选择行业</option></select>
+	            <span class="con-span">行业: </span><select id="industry" name="industry" class="easyui-combobox" style="width:166px;height:35px;line-height:35px;"><option value="">请选择行业</option></select>
 	        </div>
 	        </form>
       </div>
@@ -65,6 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    		{field:'payerName',title:'纳税人名称',align:'center'},
     	    		{field:'industryName',title:'行业',align:'center'},//表连接industry
     	    		{field:'bizScope',title:'经营范围',align:'center'},
+    	    		{field:'organName',title:'税务机关',align:'center'},
     	    		{field:'executeTime',title:'执行时间',align:'center'},
     	    		{field:'recordDate',title:'录入日期',align:'center'},
     	    		{field:'overDays',title:'录入超时',align:'center'},//sql计算
@@ -121,9 +122,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			})
         //为查询按钮添加事件处理函数
         $('#searchBtn').click(function(){
-        	var taxerName = $('#taxerName').val();
+        	var payerCode = $('input[name="payerCode"]').val();
+        	var payerName = $('input[name="payerName"]').val();
+        	var organ = $('input[name="organ"]').val();
+        	var startTime = $('input[name="startTime"]').val();
+        	var endTime = $('input[name="endTime"]').val();
+        	var industry = $('input[name="industry"]').val();
+        	
         	$('#dg').datagrid('load', {
-        		name: taxerName
+        		payerCode : payerCode,
+        		payerName : payerName,
+        		taxOrganId : organ,
+        		startTime : startTime,
+        		endTime : endTime,
+        		industry : industry
         	});
         })
         //定义回车键执行查询
