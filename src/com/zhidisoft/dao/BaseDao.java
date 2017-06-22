@@ -172,7 +172,7 @@ public abstract class BaseDao<T> {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select * from "+ tables +" where 1=1");
 		//拼接精确查询参数
-		if (!map.isEmpty()) {
+		if (map != null && !map.isEmpty()) {
 			for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 				//获取map集合的键
 				String key = it.next();
@@ -186,7 +186,7 @@ public abstract class BaseDao<T> {
 			}
 		}
 		//拼接模糊查询参数
-		if (!fuzzyMap.isEmpty()) {
+		if (fuzzyMap != null && !fuzzyMap.isEmpty()) {
 			for (Iterator<String> it = fuzzyMap.keySet().iterator(); it.hasNext();) {
 				//获取map集合的键
 				String key = it.next();

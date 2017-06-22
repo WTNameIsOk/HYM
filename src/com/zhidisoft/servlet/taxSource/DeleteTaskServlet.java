@@ -1,4 +1,4 @@
-package com.zhidisoft.servlet.taxPayer;
+package com.zhidisoft.servlet.taxSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zhidisoft.dao.impl.TaxSourceDaoImpl;
+import com.zhidisoft.dao.impl.TaxPayerDaoImpl;
 
 /**
  * taxPayer的删除操作服务器
@@ -18,8 +18,8 @@ import com.zhidisoft.dao.impl.TaxSourceDaoImpl;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/manage/task/delete.do")
-public class DeleteTaxPayerServlet extends HttpServlet {
+@WebServlet("/manage/taxPayer/delete.do")
+public class DeleteTaskServlet extends HttpServlet {
 
 	/**
 	 * 删除操作
@@ -30,7 +30,7 @@ public class DeleteTaxPayerServlet extends HttpServlet {
 		Integer id = Integer.parseInt(req.getParameter("id"));
 
 		// 把id传入执行数据库操作，并返回执行结果
-		TaxSourceDaoImpl dao = new TaxSourceDaoImpl();
+		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
 		// 判断结果，是否返回数据
 		if (!dao.delete(id)) {
 			PrintWriter writer = resp.getWriter();
@@ -45,7 +45,16 @@ public class DeleteTaxPayerServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+		// 获取id参数
+		Integer id = Integer.parseInt(req.getParameter("id"));
+
+		// 把id传入执行数据库操作类，并返回占用数据数量
+		TaxPayerDaoImpl dao = new TaxPayerDaoImpl();
+		Integer count = dao.isBusy(id);
+		PrintWriter writer = resp.getWriter();
+		writer.print(count);
+		writer.flush();
+		writer.close();
 	}
 
 }

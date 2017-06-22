@@ -277,11 +277,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		}
     	},
     	onClose : function(title,index){
-    		$.messager.show({
-    			title:'提示',
-    			msg:'<h4>'+title+'页面已关闭</h4>',
-    			height:150
-    		});
+    		if (title == '调查任务录入') {
+	    		$.messager.show({
+	    			title:'提示',
+	    			msg:'<h4>'+title+'页面已关闭</h4>',
+	    			height:150
+	    		});
+    		}
     	}
     })
     

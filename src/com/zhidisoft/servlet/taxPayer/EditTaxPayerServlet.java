@@ -23,7 +23,7 @@ import com.zhidisoft.entity.TaxPayer;
 public class EditTaxPayerServlet extends HttpServlet{
 
 	/**
-	 * 根据id查询子记录数据条数，并返回
+	 * 根据id查询数据，并返回
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

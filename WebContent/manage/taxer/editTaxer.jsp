@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </td>
                         <td class="kv-label">录入人员</td>
                         <td class="kv-content">
-                            <select id="recordUser" name="recordUserId">
+                            <select id="recordUserId" name="recordUserId">
                                 <option value="-1" disabled="disabled">请选择办税专员</option>                         
                             </select>
                         </td>
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		},"json")
 		//请求录入人员的数据
 		$.get("getUsers.do",{},function(data){
-			var recordUser = $("#recordUser")
+			var recordUserId = $("#recordUserId")
 			$.each(data,function(index, val){
 				recordUser.append("<option value='"+val.id+"' "+(val.id == ${taxer.recordUserId } ? "selected='selected'" : '' )+">"+val.username+"</option>");
 			})

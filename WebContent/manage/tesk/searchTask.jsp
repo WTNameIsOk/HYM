@@ -66,12 +66,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    		{field:'industryName',title:'行业',align:'center'},//表连接industry
     	    		{field:'bizScope',title:'经营范围',align:'center'},
     	    		{field:'organName',title:'税务机关',align:'center'},
+    	    		{field:'approverId',title:'批准人',align:'center'},
+    	    		{field:'executeId',title:'执行人员',align:'center'},
     	    		{field:'executeTime',title:'执行时间',align:'center'},
+    	    		{field:'recordUserId',title:'录入人员',align:'center'},
     	    		{field:'recordDate',title:'录入日期',align:'center'},
     	    		{field:'overDays',title:'录入超时',align:'center'},//sql计算
     	    		{field:'operation',title:'操  &nbsp; 作',align:'center',
     					formatter: function(value,row,index){
-    						return "<a href='javascript:' onclick='edit("+row.id+")'>修改</a>|<a href='javascript:' onclick='deleteTaxer("+row.id+")'>删除</a>"
+    						return "<a href='javascript:' onclick='edit("+row.id+")'>修改</a>|<a href='javascript:' onclick='deleteTesk("+row.id+")'>删除</a>"
     					}
     				}
     	        ]]
@@ -146,8 +149,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            }
        		});
   		})
+    	//修改操作
+    	var edit = function(id){
+    		openTopWindow({
+                width : 1000,
+                height : 600,
+                title : "修改任务信息",
+                url : "manage/task/edit.do?id="+id,
+                
+            })
+    	}
+	    	//提交删除请求
+	    	var deleteOperation = function(id){
+	    		$.post("manage/task/delete.do",{"id":id},function(result){
+	    			if (result){
+	    				parent.$.messager.alert('提示','删除失败');
+	    			} else {
+	    				$.messager.alert('提示','删除成功','',function(){
+	    					top.$('.easyui-tabs1').tabs('getSelected').find('iframe')[0].contentWindow.$('#dg').datagrid('load');
+	    				});
+	    			}
+	    		})
+	    	}
+	    	//删除操作
+	    	var deleteTesk = function(id){
+	    		parent.$.messager.confirm('提示','确认删除？',function(r){
+	    		    if (r){deleteOperation(id);}
+	   		    })
+	    	}
 
-
+		
 
         $(".more").click(function(){
             $(this).closest(".conditions").siblings().toggleClass("hide");
